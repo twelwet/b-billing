@@ -1,2 +1,13 @@
 # dependencies
 /node_modules
+
+# misc
+Thumbs.db
+.DS_Store
+.env
+*.log*
+
+# editors
+.idea
+*.sublime*
+.vscode

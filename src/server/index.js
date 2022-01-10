@@ -1,5 +1,6 @@
 'use strict';
 
+require(`dotenv`).config();
 const express = require(`express`);
 
 const app = express();
@@ -11,6 +12,6 @@ app.get(`/info`, (req, res) => {
 });
 
 app.listen(
-  8080,
-  () => console.log(`Server starts on port: 8080`)
+  process.env.SERVER_PORT,
+  () => console.log(`Server starts on port: ${process.env.SERVER_PORT}`)
 );
