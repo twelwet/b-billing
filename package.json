@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "8.6.0",
+    "eslint-config-htmlacademy": "4.1.0"
+  }
 }
