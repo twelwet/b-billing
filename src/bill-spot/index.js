@@ -19,6 +19,7 @@ const getSpotData = (category, baseCoin) => {
     pairs: signalPairs,
     profit,
     profitByPeriods: getPeriodProfits(periodNames, signalPairs),
+    name: `${category}-${baseCoin}`
   };
 };
 
