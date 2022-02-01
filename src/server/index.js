@@ -3,7 +3,8 @@
 require(`dotenv`).config();
 const express = require(`express`);
 const {getPrices} = require(`../services/node-binance-api/methods`);
-const {spotSignalBilling} = require(`../bill-spot/signal`);
+const getSpotData = require(`../bill-spot`);
+const {Category, BaseCoin} = require(`../bill-spot/constants`);
 
 const app = express();
 app.set(`json spaces`, 2);
@@ -17,13 +18,36 @@ app.get(`/info`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/billing/spot/signal`, (req, res) => {
+app.get(`/billing/spot/signal/${BaseCoin.BTC}`, (req, res) => {
   const pageContent = {
-    title: `spot-signal`,
-    data: spotSignalBilling,
+    title: Category.SIGNAL,
+    data: getSpotData(Category.SIGNAL, BaseCoin.BTC),
   };
-  res.render(`signal`, pageContent);
+  res.render(`spot`, pageContent);
+});
 
+app.get(`/billing/spot/signal/${BaseCoin.USDT}`, (req, res) => {
+  const pageContent = {
+    title: Category.SIGNAL,
+    data: getSpotData(Category.SIGNAL, BaseCoin.USDT),
+  };
+  res.render(`spot`, pageContent);
+});
+
+app.get(`/billing/spot/classic/${BaseCoin.BTC}`, (req, res) => {
+  const pageContent = {
+    title: Category.CLASSIC,
+    data: getSpotData(Category.CLASSIC, BaseCoin.BTC),
+  };
+  res.render(`spot`, pageContent);
+});
+
+app.get(`/billing/spot/classic/${BaseCoin.USDT}`, (req, res) => {
+  const pageContent = {
+    title: Category.CLASSIC,
+    data: getSpotData(Category.CLASSIC, BaseCoin.USDT),
+  };
+  res.render(`spot`, pageContent);
 });
 
 app.listen(
