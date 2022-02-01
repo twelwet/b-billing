@@ -1,34 +1,23 @@
 'use strict';
 
 const spotTradesRow = require(`../../data/json/spot-trades-actual.json`);
-const {reducer, getCountable, sortByIsClosed} = require(`./utils`);
-const {SPOT_SIGNAL_CATEGORY, Type} = require(`./constants`);
+const {reducer, getCountable, getBilling} = require(`./utils`);
+const {SPOT_SIGNAL_CATEGORY, TradeType} = require(`./constants`);
 
 const spotTrades = getCountable(spotTradesRow);
 
-const signalTrades = spotTrades.filter((trade) => trade[`category`] === SPOT_SIGNAL_CATEGORY);
-const signalAssets = [...new Set(signalTrades.map((item) => item[`market`]))];
+const closedSignalPairs = getBilling(spotTrades, SPOT_SIGNAL_CATEGORY, TradeType.CLOSED);
+const openedSignalPairs = getBilling(spotTrades, SPOT_SIGNAL_CATEGORY, TradeType.OPENED);
 
-const spotBilling = [];
-for (const asset of signalAssets) {
-  const assetTrades = signalTrades.filter((item) => item[`market`] === asset);
+const spotSignalBilling = {
+  opened: {
+    profit: openedSignalPairs.map((pair) => pair[`profit`]).reduce(reducer),
+    pairs: openedSignalPairs,
+  },
+  closed: {
+    profit: closedSignalPairs.map((pair) => pair[`profit`]).reduce(reducer),
+    pairs: closedSignalPairs,
+  },
+};
 
-  const buyTrades = assetTrades.filter((item) => item[`type`] === Type.BUY);
-  const sellTrades = assetTrades.filter((item) => item[`type`] === Type.SELL);
-
-  const buy = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-  const sell = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-
-  const totalBuy = buyTrades.length > 0 ? buyTrades.map((item) => item[`total`]).reduce(reducer) : 0;
-  const totalSell = sellTrades.length > 0 ? sellTrades.map((item) => item[`total`]).reduce(reducer) : 0;
-
-  const isClosed = +((buy - sell).toFixed(5)) <= +(2 * (buy / 1000).toFixed(5));
-
-  const profit = totalSell === 0 ? 0 : totalSell - totalBuy;
-
-  spotBilling.push({asset, buy, sell, isClosed, profit});
-}
-
-spotBilling.sort(sortByIsClosed);
-
-module.exports = {spotBilling};
+module.exports = {spotSignalBilling};

@@ -3,7 +3,7 @@
 require(`dotenv`).config();
 const express = require(`express`);
 const {getPrices} = require(`../services/node-binance-api/methods`);
-const {spotBilling} = require(`../bill-spot/signal`);
+const {spotSignalBilling} = require(`../bill-spot/signal`);
 
 const app = express();
 app.set(`json spaces`, 2);
@@ -15,7 +15,7 @@ app.get(`/info`, async (req, res) => {
 });
 
 app.get(`/billing/spot/signal`, (req, res) => {
-  res.json(spotBilling);
+  res.json(spotSignalBilling);
 });
 
 app.listen(
