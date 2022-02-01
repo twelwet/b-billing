@@ -4,22 +4,28 @@ block content
   table(border='1')
     tr
       th
-        b Asset
+        b ASSET
       th
-        b Closed
+        b CLOSED
       th
-        b Buy
+        b BUY
       th
-        b Sell
+        b SELL
       th
-        b Profit
-    each item in data.pairs
+        b PROFIT
+      each periodName in data.periodNames
+        th
+          b= periodName
+    each pair in data.pairs
       tr
-        td= item[`asset`]
-        td= item[`isClosed`] ? `yes` : `no`
-        td= item[`buy`]
-        td= item[`sell`]
-        td(style= item[`profit`] < 0 ? {color: `red`} : {color: `black`})= item[`profit`]
+        td= pair[`asset`]
+        td= pair[`isClosed`] ? `yes` : `no`
+        td= pair[`buy`]
+        td= pair[`sell`]
+        td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
+        each period in data.periodNames
+          - var periodProfit = pair[`periodNames`].find((periodName) => periodName === period) === period ? pair[`periodProfits`][`${period}`] : 0
+          td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
     tr
       td
         b Summary
@@ -28,3 +34,6 @@ block content
       td
       td
         b= data.profit
+      each item in data.periodProfits
+        td
+          b(style= item < 0 ? {color: `red`} : {color: `black`})= item
