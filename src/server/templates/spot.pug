@@ -11,29 +11,29 @@ block content
         b BUY
       th
         b SELL
-      th
-        b PROFIT
       each periodName in data.periodNames
         th
           b= periodName
+      th
+        b PROFIT
     each pair in data.pairs
       tr
         td= pair[`asset`]
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buy`]
         td= pair[`sell`]
-        td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
         each period in data.periodNames
           - var periodProfit = pair[`periodNames`].find((periodName) => periodName === period) === period ? pair[`periodProfits`][`${period}`] : 0
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
+        td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
     tr
       td
         b Summary
       td
       td
       td
-      td
-        b= data.profit
       each item in data.profitByPeriods
         td
           b(style= item < 0 ? {color: `red`} : {color: `black`})= item
+      td
+        b= data.profit
