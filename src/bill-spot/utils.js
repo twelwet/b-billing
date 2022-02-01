@@ -39,8 +39,10 @@ const getAssetProfit = (totalBuy, totalSell) => {
   return totalSell === 0 ? 0 : totalSell - totalBuy;
 };
 
-const getBilling = (allTrades, categoryName, tradeType) => {
-  const allTradesInCategory = allTrades.filter((trade) => trade[`category`] === categoryName);
+const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
+  const allTradesInCategory = allTrades
+    .filter((trade) => trade[`category`] === categoryName)
+    .filter((trade) => trade[`baseCoin`] === baseCoin);
   const trades = allTradesInCategory.filter((trade) => trade[`tradeType`] === tradeType);
   const assets = [...new Set(trades.map((item) => item[`market`]))];
   const result = [];
