@@ -1,7 +1,7 @@
 'use strict';
 
 const spotTradesRow = require(`../../data/json/spot-trades-actual.json`);
-const {reducer, getCountable} = require(`./utils`);
+const {reducer, getCountable, sortByIsClosed} = require(`./utils`);
 const {SPOT_SIGNAL_CATEGORY, Type} = require(`./constants`);
 
 const spotTrades = getCountable(spotTradesRow);
@@ -28,5 +28,7 @@ for (const asset of signalAssets) {
 
   spotBilling.push({asset, buy, sell, isClosed, profit});
 }
+
+spotBilling.sort(sortByIsClosed);
 
 module.exports = {spotBilling};

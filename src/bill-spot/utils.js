@@ -12,4 +12,12 @@ const getCountable = (data) => {
   return data;
 };
 
-module.exports = {reducer, getCountable};
+const sortByIsClosed = (a, b) => {
+  if (a[`isClosed`] * b[`isClosed`]) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+module.exports = {reducer, getCountable, sortByIsClosed};
