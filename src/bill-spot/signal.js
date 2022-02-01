@@ -8,16 +8,11 @@ const spotTrades = getCountable(spotTradesRow);
 
 const closedSignalPairs = getBilling(spotTrades, SPOT_SIGNAL_CATEGORY, TradeType.CLOSED);
 const openedSignalPairs = getBilling(spotTrades, SPOT_SIGNAL_CATEGORY, TradeType.OPENED);
+const signalPairs = closedSignalPairs.concat(openedSignalPairs);
 
 const spotSignalBilling = {
-  opened: {
-    profit: openedSignalPairs.map((pair) => pair[`profit`]).reduce(reducer),
-    pairs: openedSignalPairs,
-  },
-  closed: {
-    profit: closedSignalPairs.map((pair) => pair[`profit`]).reduce(reducer),
-    pairs: closedSignalPairs,
-  },
+  profit: signalPairs.map((pair) => pair[`profit`]).reduce(reducer),
+  pairs: signalPairs,
 };
 
 module.exports = {spotSignalBilling};

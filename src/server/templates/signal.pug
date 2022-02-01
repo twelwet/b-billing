@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  table(border='1')
+    tr
+      th
+        b Asset
+      th
+        b Closed
+      th
+        b Buy
+      th
+        b Sell
+      th
+        b Profit
+    each item in data.pairs
+      tr
+        td= item[`asset`]
+        td= item[`isClosed`] ? `yes` : `no`
+        td= item[`buy`]
+        td= item[`sell`]
+        td(style= item[`profit`] < 0 ? {color: `red`} : {color: `black`})= item[`profit`]
+    tr
+      td
+        b Summary
+      td
+      td
+      td
+      td
+        b= data.profit

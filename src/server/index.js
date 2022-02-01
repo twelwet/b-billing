@@ -9,13 +9,21 @@ const app = express();
 app.set(`json spaces`, 2);
 app.use(express.json());
 
+app.set(`views`, `./src/server/templates`);
+app.set(`view engine`, `pug`);
+
 app.get(`/info`, async (req, res) => {
   const result = await getPrices();
   res.json(result);
 });
 
 app.get(`/billing/spot/signal`, (req, res) => {
-  res.json(spotSignalBilling);
+  const pageContent = {
+    title: `spot-signal`,
+    data: spotSignalBilling,
+  };
+  res.render(`signal`, pageContent);
+
 });
 
 app.listen(
