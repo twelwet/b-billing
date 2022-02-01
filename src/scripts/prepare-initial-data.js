@@ -1,7 +1,7 @@
 'use strict';
 
-const {saveToFile, getJsonFromCsv} = require(`../utils`);
-const {FilePath} = require(`../constants`);
+const {saveToFile, getJsonFromCsv} = require(`./utils`);
+const {FilePath} = require(`./constants`);
 
 const prepareJson = (pathToCsvFile, resultPath) => {
   getJsonFromCsv(pathToCsvFile)

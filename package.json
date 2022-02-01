@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npm run eslint",
     "eslint": "eslint --ext .js src/",
+    "prepare-data": "node src/scripts/prepare-initial-data.js",
     "start": "node ./src/index.js",
     "server": "nodemon ./src/server/index.js"
   },
