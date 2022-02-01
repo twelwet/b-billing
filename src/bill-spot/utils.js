@@ -22,6 +22,20 @@ const sortByIsClosed = (a, b) => {
   }
 };
 
+const getAssetInfo = (trades) => {
+  const buyTrades = trades.filter((item) => item[`type`] === Type.BUY);
+  const sellTrades = trades.filter((item) => item[`type`] === Type.SELL);
+  const buy = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
+  const sell = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
+  return {buyTrades, sellTrades, buy, sell};
+};
+
+const getAssetProfit = (buyTrades, sellTrades) => {
+  const totalBuy = buyTrades.length > 0 ? buyTrades.map((item) => item[`total`]).reduce(reducer) : 0;
+  const totalSell = sellTrades.length > 0 ? sellTrades.map((item) => item[`total`]).reduce(reducer) : 0;
+  return totalSell === 0 ? 0 : totalSell - totalBuy;
+};
+
 const getBilling = (allTrades, categoryName, tradeType) => {
   const allTradesInCategory = allTrades.filter((trade) => trade[`category`] === categoryName);
   const trades = allTradesInCategory.filter((trade) => trade[`tradeType`] === tradeType);
@@ -30,20 +44,9 @@ const getBilling = (allTrades, categoryName, tradeType) => {
 
   for (const asset of assets) {
     const assetTrades = trades.filter((item) => item[`market`] === asset);
-
-    const buyTrades = assetTrades.filter((item) => item[`type`] === Type.BUY);
-    const sellTrades = assetTrades.filter((item) => item[`type`] === Type.SELL);
-
-    const buy = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-    const sell = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-
-    const totalBuy = buyTrades.length > 0 ? buyTrades.map((item) => item[`total`]).reduce(reducer) : 0;
-    const totalSell = sellTrades.length > 0 ? sellTrades.map((item) => item[`total`]).reduce(reducer) : 0;
-
+    const {buyTrades, sellTrades, buy, sell} = getAssetInfo(assetTrades);
+    const profit = getAssetProfit(buyTrades, sellTrades);
     const isClosed = +((buy - sell).toFixed(5)) <= +(2 * (buy / 1000).toFixed(5));
-
-    const profit = totalSell === 0 ? 0 : totalSell - totalBuy;
-
     result.push({asset, buy, sell, isClosed, profit});
   }
   return result.sort(sortByIsClosed);
