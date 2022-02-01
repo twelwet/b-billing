@@ -34,6 +34,6 @@ block content
       td
       td
         b= data.profit
-      each item in data.periodProfits
+      each item in data.profitByPeriods
         td
           b(style= item < 0 ? {color: `red`} : {color: `black`})= item

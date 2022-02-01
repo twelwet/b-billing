@@ -11,12 +11,13 @@ const openedSignalPairs = getBilling(spotTrades, SPOT_SIGNAL_CATEGORY, TradeType
 const signalPairs = closedSignalPairs.concat(openedSignalPairs);
 
 const periodNames = [...(new Set(spotTrades.map((trade) => trade[`period`])))];
+const profit = signalPairs.length > 0 ? signalPairs.map((pair) => pair[`profit`]).reduce(reducer) : 0;
 
 const spotSignalBilling = {
   periodNames,
   pairs: signalPairs,
-  profit: signalPairs.map((pair) => pair[`profit`]).reduce(reducer),
-  periodProfits: getPeriodProfits(periodNames, signalPairs),
+  profit,
+  profitByPeriods: getPeriodProfits(periodNames, signalPairs),
 };
 
 module.exports = {spotSignalBilling};
