@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h3= data.name
+  h3= generalInfo.name
   table(border='1')
     tr
       th
@@ -12,18 +12,18 @@ block content
         b BUY (coins)
       th
         b SELL (coins)
-      each periodName in data.periodNames
+      each periodName in generalInfo.periodNames
         th
           b= periodName
       th
         b PROFIT
-    each pair in data.pairs
+    each pair in pairs
       tr
         td= pair[`asset`]
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyCoins`]
         td= pair[`sellCoins`]
-        each period in data.periodNames
+        each period in generalInfo.periodNames
           - var periodProfit = pair[`periodNames`].find((periodName) => periodName === period) === period ? pair[`periodProfits`][`${period}`] : 0
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
         td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
@@ -36,8 +36,8 @@ block content
         b -
       td
         b -
-      each item in data.profitByPeriods
+      each item in summaryInfo.profitByPeriods
         td
           b(style= item < 0 ? {color: `red`} : {color: `black`})= item
       td
-        b= data.profit
+        b= summaryInfo.profit

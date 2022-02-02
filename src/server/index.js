@@ -19,33 +19,45 @@ app.get(`/info`, async (req, res) => {
 });
 
 app.get(`/billing/spot/signal/${BaseCoin.BTC}`, (req, res) => {
+  const {pairs, summaryInfo, generalInfo} = getSpotData(Category.SIGNAL, BaseCoin.BTC);
   const pageContent = {
-    title: Category.SIGNAL,
-    data: getSpotData(Category.SIGNAL, BaseCoin.BTC),
+    title: generalInfo.name,
+    pairs,
+    summaryInfo,
+    generalInfo,
   };
   res.render(`spot`, pageContent);
 });
 
 app.get(`/billing/spot/signal/${BaseCoin.USDT}`, (req, res) => {
+  const {pairs, summaryInfo, generalInfo} = getSpotData(Category.SIGNAL, BaseCoin.USDT);
   const pageContent = {
-    title: Category.SIGNAL,
-    data: getSpotData(Category.SIGNAL, BaseCoin.USDT),
+    title: generalInfo.name,
+    pairs,
+    summaryInfo,
+    generalInfo,
   };
   res.render(`spot`, pageContent);
 });
 
 app.get(`/billing/spot/classic/${BaseCoin.BTC}`, (req, res) => {
+  const {pairs, summaryInfo, generalInfo} = getSpotData(Category.CLASSIC, BaseCoin.BTC);
   const pageContent = {
-    title: Category.CLASSIC,
-    data: getSpotData(Category.CLASSIC, BaseCoin.BTC),
+    title: generalInfo.name,
+    pairs,
+    summaryInfo,
+    generalInfo,
   };
   res.render(`spot`, pageContent);
 });
 
 app.get(`/billing/spot/classic/${BaseCoin.USDT}`, (req, res) => {
+  const {pairs, summaryInfo, generalInfo} = getSpotData(Category.CLASSIC, BaseCoin.USDT);
   const pageContent = {
-    title: Category.CLASSIC,
-    data: getSpotData(Category.CLASSIC, BaseCoin.USDT),
+    title: generalInfo.name,
+    pairs,
+    summaryInfo,
+    generalInfo,
   };
   res.render(`spot`, pageContent);
 });

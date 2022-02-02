@@ -7,19 +7,25 @@ const {TradeType} = require(`./constants`);
 const spotTrades = getCountable(spotTradesRow);
 
 const getSpotData = (category, baseCoin) => {
-  const closedSignalPairs = getBilling(spotTrades, category, TradeType.CLOSED, baseCoin);
-  const openedSignalPairs = getBilling(spotTrades, category, TradeType.OPENED, baseCoin);
-  const signalPairs = closedSignalPairs.concat(openedSignalPairs);
+  const closedPairs = getBilling(spotTrades, category, TradeType.CLOSED, baseCoin);
+  const openedPairs = getBilling(spotTrades, category, TradeType.OPENED, baseCoin);
 
-  const periodNames = [...(new Set(spotTrades.map((trade) => trade[`period`])))];
-  const profit = signalPairs.length > 0 ? signalPairs.map((pair) => pair[`profit`]).reduce(reducer) : 0;
+  const pairs = closedPairs.concat(openedPairs);
+
+  const generalInfo = {
+    name: `${category}-${baseCoin}`,
+    periodNames: [...(new Set(spotTrades.map((trade) => trade[`period`])))],
+  };
+
+  const summaryInfo = {
+    profit: pairs.length > 0 ? pairs.map((pair) => pair[`profit`]).reduce(reducer) : 0,
+    profitByPeriods: getPeriodProfits(generalInfo.periodNames, pairs),
+  };
 
   return {
-    periodNames,
-    pairs: signalPairs,
-    profit,
-    profitByPeriods: getPeriodProfits(periodNames, signalPairs),
-    name: `${category}-${baseCoin}`
+    pairs,
+    summaryInfo,
+    generalInfo,
   };
 };
 
