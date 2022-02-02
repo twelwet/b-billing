@@ -12,6 +12,10 @@ block content
         b BUY (coins)
       th
         b SELL (coins)
+      th
+        b BUY (total)
+      th
+        b SELL (total)
       each periodName in generalInfo.periodNames
         th
           b= periodName
@@ -23,6 +27,8 @@ block content
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyCoins`]
         td= pair[`sellCoins`]
+        td= pair[`totalBuy`]
+        td= pair[`totalSell`]
         each period in generalInfo.periodNames
           - var periodProfit = pair[`periodNames`].find((periodName) => periodName === period) === period ? pair[`periodProfits`][`${period}`] : 0
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
@@ -36,6 +42,10 @@ block content
         b -
       td
         b -
+      td
+        b ---
+      td
+        b ---
       each item in summaryInfo.profitByPeriods
         td
           b(style= item < 0 ? {color: `red`} : {color: `black`})= item

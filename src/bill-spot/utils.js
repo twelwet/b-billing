@@ -61,7 +61,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
       periodProfits[`${period}`] = profit * sellByPeriod / totalSell;
     }
 
-    result.push({asset, buyCoins, sellCoins, isClosed, profit, periodProfits, periodNames});
+    result.push({asset, buyCoins, sellCoins, totalBuy, totalSell, isClosed, profit, periodProfits, periodNames});
   }
   return result.sort(sortBySellPeriod);
 };
