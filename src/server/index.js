@@ -4,6 +4,7 @@ require(`dotenv`).config();
 const express = require(`express`);
 const {getPrices} = require(`../services/node-binance-api/methods`);
 const getSpotData = require(`../bill-spot`);
+const getFuturesData = require(`../bill-f-usdt`);
 const {Category, BaseCoin} = require(`../bill-spot/constants`);
 
 const app = express();
@@ -60,6 +61,16 @@ app.get(`/billing/spot/classic/${BaseCoin.USDT}`, (req, res) => {
     generalInfo,
   };
   res.render(`spot`, pageContent);
+});
+
+app.get(`/billing/futures/classic`, (req, res) => {
+  const {pairs, generalInfo} = getFuturesData(`f-classic`);
+  const pageContent = {
+    title: generalInfo.name,
+    pairs,
+    generalInfo,
+  };
+  res.render(`futures`, pageContent);
 });
 
 app.listen(

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h3= generalInfo.name
+  table(border='1')
+    tr
+      th
+        b ASSET
+      th
+        b BUY (coins)
+      th
+        b SELL (coins)
+      th
+        b PROFIT
+    each pair in pairs
+      tr
+        td= pair[`asset`]
+        td= pair[`buyCoins`]
+        td= pair[`sellCoins`]
+        td= pair[`profit`]

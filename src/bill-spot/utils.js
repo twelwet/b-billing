@@ -77,4 +77,4 @@ const getPeriodProfits = (periodNames, allTradesInCategory) => {
   return periodProfits;
 };
 
-module.exports = {reducer, getCountable, getBilling, getPeriodProfits};
+module.exports = {reducer, getAssetInfo, getCountable, getBilling, getPeriodProfits};
