@@ -23,9 +23,9 @@ const sortBySellPeriod = (a, b) => {
 const getAssetInfo = (trades) => {
   const buyTrades = trades.filter((item) => item[`type`] === Type.BUY);
   const sellTrades = trades.filter((item) => item[`type`] === Type.SELL);
-  const buy = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-  const sell = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-  return {buyTrades, sellTrades, buy, sell};
+  const buyCoins = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
+  const sellCoins = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
+  return {buyTrades, sellTrades, buyCoins, sellCoins};
 };
 
 const getTotals = (buyTradesList, sellTradesList) => {
@@ -49,10 +49,10 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
 
   for (const asset of assets) {
     const assetTrades = trades.filter((item) => item[`market`] === asset);
-    const {buyTrades, sellTrades, buy, sell} = getAssetInfo(assetTrades);
+    const {buyTrades, sellTrades, buyCoins, sellCoins} = getAssetInfo(assetTrades);
     const {totalBuy, totalSell} = getTotals(buyTrades, sellTrades);
     const profit = getAssetProfit(totalBuy, totalSell);
-    const isClosed = +((buy - sell).toFixed(5)) <= +(2 * (buy / 1000).toFixed(5));
+    const isClosed = +((buyCoins - sellCoins).toFixed(5)) <= +(2 * (buyCoins / 1000).toFixed(5));
 
     const periodNames = [...(new Set(sellTrades.map((trade) => trade[`period`])))];
     const periodProfits = {};
@@ -61,7 +61,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
       periodProfits[`${period}`] = profit * sellByPeriod / totalSell;
     }
 
-    result.push({asset, buy, sell, isClosed, profit, periodProfits, periodNames});
+    result.push({asset, buyCoins, sellCoins, isClosed, profit, periodProfits, periodNames});
   }
   return result.sort(sortBySellPeriod);
 };

@@ -21,8 +21,8 @@ block content
       tr
         td= pair[`asset`]
         td= pair[`isClosed`] ? `yes` : `no`
-        td= pair[`buy`]
-        td= pair[`sell`]
+        td= pair[`buyCoins`]
+        td= pair[`sellCoins`]
         each period in data.periodNames
           - var periodProfit = pair[`periodNames`].find((periodName) => periodName === period) === period ? pair[`periodProfits`][`${period}`] : 0
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
