@@ -6,6 +6,8 @@ const {reducer, getPeriodProfits} = require(`../bill-spot/utils`);
 
 const futuresTrades = getCountable(futuresTradesRow);
 
+const getSumByField = (data, field) => data.length > 0 ? data.map((pair) => pair[`${field}`]).reduce(reducer) : 0;
+
 const getFuturesData = (categoryName) => {
   const pairs = getBilling(futuresTrades, categoryName);
 
@@ -15,10 +17,10 @@ const getFuturesData = (categoryName) => {
   };
 
   const summaryInfo = {
-    invest: pairs.length > 0 ? pairs.map((pair) => pair[`invest`]).reduce(reducer) : 0,
+    invest: getSumByField(pairs, `invest`),
     profitByPeriods: getPeriodProfits(generalInfo.periodNames, pairs),
-    profit: pairs.length > 0 ? pairs.map((pair) => pair[`profit`]).reduce(reducer) : 0,
-    fee: pairs.length > 0 ? pairs.map((pair) => pair[`fee`]).reduce(reducer) : 0,
+    profit: getSumByField(pairs, `profit`),
+    fee: getSumByField(pairs, `fee`),
   };
 
   return {pairs, generalInfo, summaryInfo};
