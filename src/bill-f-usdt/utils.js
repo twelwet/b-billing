@@ -15,9 +15,7 @@ const getCountable = (data) => {
   return data;
 };
 
-const getAssetProfit = (trades) => trades.length > 0 ? trades.map((asset) => asset[`realizedPnl`]).reduce(reducer) : 0;
-
-const getFee = (trades) => trades.length > 0 ? trades.map((asset) => asset[`fee`]).reduce(reducer) : 0;
+const getSumByField = (trades, fieldName) => trades.length > 0 ? trades.map((asset) => asset[`${fieldName}`]).reduce(reducer) : 0;
 
 const getIsClosed = (coinsBuy, coinsSell) => +((coinsBuy - coinsSell).toFixed(5)) <= +(2 * (coinsBuy / 1000).toFixed(5));
 
@@ -29,8 +27,8 @@ const getBilling = (allTrades, categoryName) => {
   for (const asset of assets) {
     const assetTrades = trades.filter((item) => item[`symbol`] === asset);
     const {buyCoins, sellCoins} = getAssetInfo(assetTrades);
-    const profit = getAssetProfit(assetTrades);
-    const fee = getFee(assetTrades);
+    const profit = getSumByField(assetTrades, `realizedPnl`);
+    const fee = getSumByField(assetTrades, `fee`);
     const isClosed = getIsClosed(buyCoins, sellCoins);
 
     const periodNames = [...(new Set(assetTrades.map((trade) => trade[`period`])))];
