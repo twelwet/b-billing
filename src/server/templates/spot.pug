@@ -25,8 +25,8 @@ block content
       tr
         td= pair[`asset`]
         td= pair[`isClosed`] ? `yes` : `no`
-        td= pair[`buyCoins`]
-        td= pair[`sellCoins`]
+        td= pair[`buyAmount`]
+        td= pair[`sellAmount`]
         td= pair[`totalBuy`]
         td= pair[`totalSell`]
         each period in generalInfo.periodNames

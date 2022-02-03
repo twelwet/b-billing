@@ -26,11 +26,11 @@ const getBilling = (allTrades, categoryName) => {
 
   for (const asset of assets) {
     const assetTrades = trades.filter((item) => item[`symbol`] === asset);
-    const {buyCoins, sellCoins} = getAssetInfo(assetTrades);
+    const {buyAmount, sellAmount} = getAssetInfo(assetTrades);
     const profit = getSumByField(assetTrades, `realizedPnl`);
     const fee = getSumByField(assetTrades, `fee`);
     const invest = getSumByField(assetTrades, `invest`);
-    const isClosed = getIsClosed(buyCoins, sellCoins);
+    const isClosed = getIsClosed(buyAmount, sellAmount);
 
     const periodNames = [...(new Set(assetTrades.map((trade) => trade[`period`])))];
     const periodProfits = {};
@@ -38,7 +38,7 @@ const getBilling = (allTrades, categoryName) => {
       periodProfits[`${period}`] = assetTrades.filter((trade) => trade[`period`] === period).map((trade) => trade[`realizedPnl`]).reduce(reducer);
     }
 
-    result.push({asset, invest, buyCoins, sellCoins, isClosed, periodNames, periodProfits, profit, fee});
+    result.push({asset, invest, buyAmount, sellAmount, isClosed, periodNames, periodProfits, profit, fee});
   }
 
   return result;

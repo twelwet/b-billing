@@ -26,8 +26,8 @@ block content
         td= pair[`asset`]
         td= pair[`invest`]
         td= pair[`isClosed`] ? `yes` : `no`
-        td= pair[`buyCoins`]
-        td= pair[`sellCoins`]
+        td= pair[`buyAmount`]
+        td= pair[`sellAmount`]
         each period in generalInfo.periodNames
           - var periodProfit = pair[`periodNames`].find((item) => item === period) === period ? pair[`periodProfits`][`${period}`] : 0
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit

@@ -11,9 +11,9 @@ block content
       th
         b CLOSED
       th
-        b BUY (coins)
+        b BUY (contracts)
       th
-        b SELL (coins)
+        b SELL (contracts)
       each periodName in generalInfo.periodNames
         th
           b= periodName
@@ -25,8 +25,8 @@ block content
       td= pair[`asset`]
       td= pair[`invest`]
       td= pair[`isClosed`] ? `yes` : `no`
-      td= pair[`buyCoins`]
-      td= pair[`sellCoins`]
+      td= pair[`buyAmount`]
+      td= pair[`sellAmount`]
       each periodName in generalInfo.periodNames
         - var periodProfit = pair[`periodNames`].find((item) => item === periodName) === periodName ? pair[`periodProfits`][`${periodName}`] : 0
         td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
