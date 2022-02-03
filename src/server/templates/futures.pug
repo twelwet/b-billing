@@ -39,9 +39,9 @@ block content
         b -
       td
         b -
-      each periodName in generalInfo.periodNames
+      each item in summaryInfo.profitByPeriods
         td
-          b= 0
+          b(style= item < 0 ? {color: `red`} : {color: `black`})= item
       td
         b= summaryInfo.profit
       td
