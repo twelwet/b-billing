@@ -32,7 +32,14 @@ const getBilling = (allTrades, categoryName) => {
     const profit = getAssetProfit(assetTrades);
     const fee = getFee(assetTrades);
     const isClosed = getIsClosed(buyCoins, sellCoins);
-    result.push({asset, buyCoins, sellCoins, isClosed, profit, fee});
+
+    const periodNames = [...(new Set(assetTrades.map((trade) => trade[`period`])))];
+    const periodProfits = {};
+    for (const period of periodNames) {
+      periodProfits[`${period}`] = assetTrades.filter((trade) => trade[`period`] === period).map((trade) => trade[`realizedPnl`]).reduce(reducer);
+    }
+
+    result.push({asset, buyCoins, sellCoins, isClosed, periodNames, periodProfits, profit, fee});
   }
 
   return result;
