@@ -11,4 +11,15 @@ const getCountable = (data, fields) => {
   return data;
 };
 
-module.exports = {reducer, getCountable};
+const getPeriodProfits = (periodNames, allTradesInCategory) => {
+  const periodProfits = [];
+  for (const period of periodNames) {
+    const periodProfit = allTradesInCategory
+      .filter((pair) => pair[`periodNames`].find((periodName) => periodName === period))
+      .map((pair) => pair[`periodProfits`][`${period}`]);
+    periodProfits.push(periodProfit.length > 0 ? periodProfit.reduce(reducer) : 0);
+  }
+  return periodProfits;
+};
+
+module.exports = {reducer, getCountable, getPeriodProfits};

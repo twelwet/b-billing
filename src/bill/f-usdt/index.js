@@ -2,8 +2,7 @@
 
 const futuresTradesRow = require(`../../../data/json/futures-trades-actual.json`);
 const {getBilling} = require(`./utils`);
-const {reducer, getCountable} = require(`../bill-utils`);
-const {getPeriodProfits} = require(`../spot/utils`);
+const {reducer, getCountable, getPeriodProfits} = require(`../bill-utils`);
 
 const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
 
