@@ -22,11 +22,13 @@ const getBilling = (allTrades, categoryName) => {
   const assets = [...new Set(trades.map((item) => item[`symbol`]))];
   const result = [];
 
+
   for (const asset of assets) {
     const assetTrades = trades.filter((item) => item[`symbol`] === asset);
     const {buyCoins, sellCoins} = getAssetInfo(assetTrades);
     const profit = getAssetProfit(assetTrades);
-    result.push({asset, buyCoins, sellCoins, profit});
+    const isClosed = +((buyCoins - sellCoins).toFixed(5)) <= +(2 * (buyCoins / 1000).toFixed(5));
+    result.push({asset, buyCoins, sellCoins, profit, isClosed});
   }
 
   return result;
