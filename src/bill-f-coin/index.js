@@ -11,6 +11,7 @@ const getFuturesCoinData = (categoryName, coin) => {
 
   const generalInfo = {
     name: categoryName,
+    periodNames: [...(new Set(futuresCoinTrades.map((trade) => trade[`period`])))],
   };
 
   return {pair, generalInfo};
