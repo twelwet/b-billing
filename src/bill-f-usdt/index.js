@@ -11,6 +11,7 @@ const getFuturesData = (categoryName) => {
 
   const generalInfo = {
     name: categoryName,
+    periodNames: [...(new Set(futuresTrades.map((trade) => trade[`period`])))],
   };
 
   const summaryInfo = {

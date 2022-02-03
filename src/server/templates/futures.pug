@@ -12,6 +12,9 @@ block content
         b BUY (coins)
       th
         b SELL (coins)
+      each periodName in generalInfo.periodNames
+        th
+          b= periodName
       th
         b PROFIT
       th
@@ -22,6 +25,8 @@ block content
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyCoins`]
         td= pair[`sellCoins`]
+        each periodName in generalInfo.periodNames
+          td= 0
         td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
         td= pair[`fee`]
     tr
@@ -33,6 +38,9 @@ block content
         b -
       td
         b -
+      each periodName in generalInfo.periodNames
+        td
+          b= 0
       td
         b= summaryInfo.profit
       td
