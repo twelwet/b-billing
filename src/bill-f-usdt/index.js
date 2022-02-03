@@ -15,6 +15,7 @@ const getFuturesData = (categoryName) => {
   };
 
   const summaryInfo = {
+    invest: pairs.length > 0 ? pairs.map((pair) => pair[`invest`]).reduce(reducer) : 0,
     profitByPeriods: getPeriodProfits(generalInfo.periodNames, pairs),
     profit: pairs.length > 0 ? pairs.map((pair) => pair[`profit`]).reduce(reducer) : 0,
     fee: pairs.length > 0 ? pairs.map((pair) => pair[`fee`]).reduce(reducer) : 0,

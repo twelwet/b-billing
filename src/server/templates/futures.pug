@@ -7,6 +7,8 @@ block content
       th
         b ASSET
       th
+        b INVEST (~)
+      th
         b CLOSED
       th
         b BUY (coins)
@@ -22,6 +24,7 @@ block content
     each pair in pairs
       tr
         td= pair[`asset`]
+        td= pair[`invest`]
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyCoins`]
         td= pair[`sellCoins`]
@@ -33,6 +36,8 @@ block content
     tr
       td
         b Summary
+      td
+        b= summaryInfo.invest
       td
         b -
       td
