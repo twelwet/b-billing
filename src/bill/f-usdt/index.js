@@ -1,10 +1,11 @@
 'use strict';
 
 const futuresTradesRow = require(`../../../data/json/futures-trades-actual.json`);
-const {getCountable, getBilling} = require(`./utils`);
-const {reducer, getPeriodProfits} = require(`../spot/utils`);
+const {getBilling} = require(`./utils`);
+const {reducer, getCountable} = require(`../bill-utils`);
+const {getPeriodProfits} = require(`../spot/utils`);
 
-const futuresTrades = getCountable(futuresTradesRow);
+const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
 
 const getSumByField = (data, field) => data.length > 0 ? data.map((pair) => pair[`${field}`]).reduce(reducer) : 0;
 

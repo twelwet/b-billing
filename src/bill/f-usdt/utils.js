@@ -1,6 +1,7 @@
 'use strict';
 
-const {reducer, getAssetInfo} = require(`../spot/utils`);
+const {getAssetInfo} = require(`../spot/utils`);
+const {reducer} = require(`../bill-utils`);
 
 const getCountable = (data) => {
   for (const item of data) {

@@ -1,18 +1,7 @@
 'use strict';
 
 const {Type} = require(`../constants`);
-
-const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
-const getCountable = (data) => {
-  for (const item of data) {
-    item[`price`] = +item[`price`];
-    item[`amount`] = +item[`amount`];
-    item[`total`] = +item[`total`];
-    item[`fee`] = +item[`fee`];
-  }
-  return data;
-};
+const {reducer} = require(`../bill-utils`);
 
 const sortBySellPeriod = (a, b) => {
   const aItem = a[`periodNames`].length > 0 ? +a[`periodNames`][0].slice(-2) : 0;
@@ -77,4 +66,4 @@ const getPeriodProfits = (periodNames, allTradesInCategory) => {
   return periodProfits;
 };
 
-module.exports = {reducer, getAssetInfo, getCountable, getBilling, getPeriodProfits};
+module.exports = {getAssetInfo, getBilling, getPeriodProfits};
