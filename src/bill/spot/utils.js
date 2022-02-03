@@ -1,6 +1,6 @@
 'use strict';
 
-const {reducer, getAssetInfo, sortBySellPeriod} = require(`../bill-utils`);
+const {reducer, getAssetInfo, sortBySellPeriod, getIsClosed} = require(`../bill-utils`);
 
 const getTotals = (buyTradesList, sellTradesList) => {
   return {
@@ -26,7 +26,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     const {buyTrades, sellTrades, buyAmount, sellAmount} = getAssetInfo(assetTrades);
     const {totalBuy, totalSell} = getTotals(buyTrades, sellTrades);
     const profit = getAssetProfit(totalBuy, totalSell);
-    const isClosed = +((buyAmount - sellAmount).toFixed(5)) <= +(2 * (buyAmount / 1000).toFixed(5));
+    const isClosed = getIsClosed(buyAmount, sellAmount);
 
     const periodNames = [...(new Set(sellTrades.map((trade) => trade[`period`])))];
     const periodProfits = {};
