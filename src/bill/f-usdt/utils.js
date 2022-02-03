@@ -1,6 +1,6 @@
 'use strict';
 
-const {reducer, getAssetInfo, getSumByField, getIsClosed} = require(`../bill-utils`);
+const {reducer, getAssetInfo, getSumByField, getIsClosed, sortBySellPeriod} = require(`../bill-utils`);
 
 const getBilling = (allTrades, categoryName) => {
   const trades = allTrades.filter((trade) => trade[`category`] === categoryName);
@@ -24,7 +24,7 @@ const getBilling = (allTrades, categoryName) => {
     result.push({asset, invest, buyAmount, sellAmount, isClosed, periodNames, periodProfits, profit, fee});
   }
 
-  return result;
+  return result.sort(sortBySellPeriod);
 };
 
 module.exports = {getBilling};

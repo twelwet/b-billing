@@ -1,12 +1,6 @@
 'use strict';
 
-const {reducer, getAssetInfo} = require(`../bill-utils`);
-
-const sortBySellPeriod = (a, b) => {
-  const aItem = a[`periodNames`].length > 0 ? +a[`periodNames`][0].slice(-2) : 0;
-  const bItem = b[`periodNames`].length > 0 ? +b[`periodNames`][0].slice(-2) : 0;
-  return aItem - bItem;
-};
+const {reducer, getAssetInfo, sortBySellPeriod} = require(`../bill-utils`);
 
 const getTotals = (buyTradesList, sellTradesList) => {
   return {
