@@ -1,5 +1,6 @@
 'use strict';
 
+const {Type} = require(`./constants`);
 const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
 const getCountable = (data, fields) => {
@@ -22,4 +23,12 @@ const getPeriodProfits = (periodNames, allTradesInCategory) => {
   return periodProfits;
 };
 
-module.exports = {reducer, getCountable, getPeriodProfits};
+const getAssetInfo = (trades) => {
+  const buyTrades = trades.filter((item) => item[`type`] === Type.BUY);
+  const sellTrades = trades.filter((item) => item[`type`] === Type.SELL);
+  const buyAmount = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
+  const sellAmount = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
+  return {buyTrades, sellTrades, buyAmount, sellAmount};
+};
+
+module.exports = {reducer, getCountable, getPeriodProfits, getAssetInfo};

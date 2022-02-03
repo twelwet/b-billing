@@ -1,7 +1,6 @@
 'use strict';
 
-const {getAssetInfo} = require(`../spot/utils`);
-const {reducer} = require(`../bill-utils`);
+const {reducer, getAssetInfo} = require(`../bill-utils`);
 
 const getSumByField = (trades, fieldName) => trades.length > 0 ? trades.map((asset) => asset[`${fieldName}`]).reduce(reducer) : 0;
 
