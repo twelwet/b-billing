@@ -22,5 +22,18 @@ block content
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyCoins`]
         td= pair[`sellCoins`]
-        td= pair[`profit`]
+        td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
         td= pair[`fee`]
+    tr
+      td
+        b Summary
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b= summaryInfo.profit
+      td
+        b= summaryInfo.fee

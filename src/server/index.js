@@ -64,11 +64,12 @@ app.get(`/billing/spot/classic/${BaseCoin.USDT}`, (req, res) => {
 });
 
 app.get(`/billing/futures/classic`, (req, res) => {
-  const {pairs, generalInfo} = getFuturesData(`f-classic`);
+  const {pairs, generalInfo, summaryInfo} = getFuturesData(`f-classic`);
   const pageContent = {
     title: generalInfo.name,
     pairs,
     generalInfo,
+    summaryInfo,
   };
   res.render(`futures`, pageContent);
 });
