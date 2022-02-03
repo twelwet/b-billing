@@ -1,10 +1,6 @@
 'use strict';
 
-const {reducer, getAssetInfo} = require(`../bill-utils`);
-
-const getSumByField = (trades, fieldName) => trades.length > 0 ? trades.map((asset) => asset[`${fieldName}`]).reduce(reducer) : 0;
-
-const getIsClosed = (coinsBuy, coinsSell) => +((coinsBuy - coinsSell).toFixed(5)) <= +(2 * (coinsBuy / 1000).toFixed(5));
+const {reducer, getAssetInfo, getSumByField, getIsClosed} = require(`../bill-utils`);
 
 const getBilling = (allTrades, categoryName, coin) => {
   const trades = allTrades

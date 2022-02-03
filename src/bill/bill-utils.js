@@ -31,4 +31,11 @@ const getAssetInfo = (trades) => {
   return {buyTrades, sellTrades, buyAmount, sellAmount};
 };
 
-module.exports = {reducer, getCountable, getPeriodProfits, getAssetInfo};
+const getSumByField = (trades, fieldName) => trades.length > 0
+  ? trades.map((asset) => asset[`${fieldName}`]).reduce(reducer)
+  : 0;
+
+const getIsClosed = (coinsBuy, coinsSell) => +((coinsBuy - coinsSell).toFixed(5)) <= +(2 * (coinsBuy / 1000).toFixed(5));
+
+
+module.exports = {reducer, getCountable, getPeriodProfits, getAssetInfo, getSumByField, getIsClosed};

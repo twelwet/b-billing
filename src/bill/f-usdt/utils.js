@@ -1,23 +1,6 @@
 'use strict';
 
-const {reducer, getAssetInfo} = require(`../bill-utils`);
-
-const getCountable = (data) => {
-  for (const item of data) {
-    item[`price`] = +item[`price`];
-    item[`amount`] = +item[`amount`];
-    item[`total`] = +item[`total`];
-    item[`realizedPnl`] = +item[`realizedPnl`];
-    item[`fee`] = +item[`fee`];
-    item[`leverage`] = +item[`leverage`];
-    item[`invest`] = +item[`invest`];
-  }
-  return data;
-};
-
-const getSumByField = (trades, fieldName) => trades.length > 0 ? trades.map((asset) => asset[`${fieldName}`]).reduce(reducer) : 0;
-
-const getIsClosed = (coinsBuy, coinsSell) => +((coinsBuy - coinsSell).toFixed(5)) <= +(2 * (coinsBuy / 1000).toFixed(5));
+const {reducer, getAssetInfo, getSumByField, getIsClosed} = require(`../bill-utils`);
 
 const getBilling = (allTrades, categoryName) => {
   const trades = allTrades.filter((trade) => trade[`category`] === categoryName);
@@ -44,4 +27,4 @@ const getBilling = (allTrades, categoryName) => {
   return result;
 };
 
-module.exports = {getCountable, getBilling};
+module.exports = {getBilling};
