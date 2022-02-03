@@ -1,6 +1,6 @@
 'use strict';
 
-const {Type} = require(`./constants`);
+const {Type} = require(`../constants`);
 
 const reducer = (previousValue, currentValue) => previousValue + currentValue;
 

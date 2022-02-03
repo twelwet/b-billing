@@ -3,10 +3,10 @@
 require(`dotenv`).config();
 const express = require(`express`);
 const {getPrices} = require(`../services/node-binance-api/methods`);
-const getSpotData = require(`../bill-spot`);
-const getFuturesData = require(`../bill-f-usdt`);
-const getFuturesCoinData = require(`../bill-f-coin`);
-const {Category, BaseCoin} = require(`../bill-spot/constants`);
+const getSpotData = require(`../bill/spot`);
+const getFuturesData = require(`../bill/f-usdt`);
+const getFuturesCoinData = require(`../bill/f-coin`);
+const {Category, BaseCoin} = require(`../bill/constants`);
 
 const app = express();
 app.set(`json spaces`, 2);

@@ -1,8 +1,8 @@
 'use strict';
 
-const futuresTradesRow = require(`../../data/json/futures-trades-actual.json`);
+const futuresTradesRow = require(`../../../data/json/futures-trades-actual.json`);
 const {getCountable, getBilling} = require(`./utils`);
-const {reducer, getPeriodProfits} = require(`../bill-spot/utils`);
+const {reducer, getPeriodProfits} = require(`../spot/utils`);
 
 const futuresTrades = getCountable(futuresTradesRow);
 
