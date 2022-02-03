@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h3= generalInfo.name
+  table(border='1')
+    tr
+      th
+        b ASSET
+      th
+        b INVEST (~)
+      th
+        b CLOSED
+      th
+        b BUY (coins)
+      th
+        b SELL (coins)
+      th
+        b PROFIT
+      th
+        b FEE
+    tr
+      td= pair[`asset`]
+      td= pair[`invest`]
+      td= pair[`isClosed`] ? `yes` : `no`
+      td= pair[`buyCoins`]
+      td= pair[`sellCoins`]
+      td= pair[`profit`]
+      td= pair[`fee`]
+

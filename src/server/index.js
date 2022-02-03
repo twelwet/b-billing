@@ -5,6 +5,7 @@ const express = require(`express`);
 const {getPrices} = require(`../services/node-binance-api/methods`);
 const getSpotData = require(`../bill-spot`);
 const getFuturesData = require(`../bill-f-usdt`);
+const getFuturesCoinData = require(`../bill-f-coin`);
 const {Category, BaseCoin} = require(`../bill-spot/constants`);
 
 const app = express();
@@ -96,6 +97,35 @@ app.get(`/billing/futures/denis`, (req, res) => {
   res.render(`futures`, pageContent);
 });
 
+app.get(`/billing/futures-coin/classic/TRX`, (req, res) => {
+  const {pair, generalInfo} = getFuturesCoinData(`f-classic`, `TRXUSD_PERP`);
+  const pageContent = {
+    title: generalInfo.name,
+    generalInfo,
+    pair,
+  };
+  res.render(`futures-coin`, pageContent);
+});
+
+app.get(`/billing/futures-coin/signal/BTC`, (req, res) => {
+  const {pair, generalInfo} = getFuturesCoinData(`f-signal`, `BTCUSD_PERP`);
+  const pageContent = {
+    title: generalInfo.name,
+    generalInfo,
+    pair,
+  };
+  res.render(`futures-coin`, pageContent);
+});
+
+app.get(`/billing/futures-coin/classic/ETH`, (req, res) => {
+  const {pair, generalInfo} = getFuturesCoinData(`f-classic`, `ETHUSD_PERP`);
+  const pageContent = {
+    title: generalInfo.name,
+    generalInfo,
+    pair,
+  };
+  res.render(`futures-coin`, pageContent);
+});
 
 app.listen(
     process.env.SERVER_PORT,
