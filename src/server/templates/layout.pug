@@ -3,14 +3,10 @@ html
   head
     title= title
   body
-    div
-      a(href=`/billing/spot/signal/btc`) spot-signal-BTC
-    div
-      a(href=`/billing/spot/signal/usdt`) spot-signal-USDT
-    div
-      a(href=`/billing/spot/classic/btc`) spot-classic-BTC
-    div
-      a(href=`/billing/spot/classic/usdt`) spot-classic-USDT
+    each catItem in categories[`spot`]
+      each coin in baseCoins
+        div
+          a(href=`/billing/${catItem}/${coin}`)= `${catItem}-${coin}`
     div
       a(href=`/billing/futures/signal`) f-signal
     div
