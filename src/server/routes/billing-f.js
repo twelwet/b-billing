@@ -6,12 +6,14 @@ const {Category, BaseCoin} = require(`../../bill/constants`);
 
 const billingFuturesRouter = new Router();
 
-billingFuturesRouter.get(`/signal`, (req, res) => {
-  const {pairs, generalInfo, summaryInfo} = getFuturesData(`f-signal`);
+billingFuturesRouter.get(`/:category`, (req, res) => {
+  const category = req.params[`category`];
+  const {pairs, generalInfo, summaryInfo} = getFuturesData(category);
   const pageContent = {
     title: generalInfo.name,
     categories: {
       spot: Object.values(Category.Spot),
+      futures: Object.values(Category.Futures),
     },
     baseCoins: Object.values(BaseCoin),
     pairs,

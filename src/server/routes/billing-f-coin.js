@@ -12,6 +12,7 @@ billingFuturesCoinRouter.get(`/classic/TRX`, (req, res) => {
     title: generalInfo.name,
     categories: {
       spot: Object.values(Category.Spot),
+      futures: Object.values(Category.Futures),
     },
     baseCoins: Object.values(BaseCoin),
     generalInfo,
@@ -26,6 +27,7 @@ billingFuturesCoinRouter.get(`/signal/BTC`, (req, res) => {
     title: generalInfo.name,
     categories: {
       spot: Object.values(Category.Spot),
+      futures: Object.values(Category.Futures),
     },
     baseCoins: Object.values(BaseCoin),
     generalInfo,
@@ -40,6 +42,7 @@ billingFuturesCoinRouter.get(`/classic/ETH`, (req, res) => {
     title: generalInfo.name,
     categories: {
       spot: Object.values(Category.Spot),
+      futures: Object.values(Category.Futures),
     },
     baseCoins: Object.values(BaseCoin),
     generalInfo,

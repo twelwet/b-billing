@@ -7,12 +7,9 @@ html
       each coin in baseCoins
         div
           a(href=`/billing/spot/${catItem}/${coin}`)= `${catItem}-${coin}`
-    div
-      a(href=`/billing/futures/signal`) f-signal
-    div
-      a(href=`/billing/futures/classic`) f-classic
-    div
-      a(href=`/billing/futures/denis`) f-denis
+    each catFuturesItem in categories[`futures`]
+      div
+        a(href=`/billing/futures/${catFuturesItem}`)= catFuturesItem
     div
       a(href=`/billing/futures-coin/classic/TRX`) f-coin-classic-TRX
     div

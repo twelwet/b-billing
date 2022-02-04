@@ -14,6 +14,7 @@ billingSpotRouter.get(`/:category/:baseCoin`, (req, res) => {
     title: generalInfo.name,
     categories: {
       spot: Object.values(Category.Spot),
+      futures: Object.values(Category.Futures),
     },
     baseCoins: Object.values(BaseCoin),
     pairs,
