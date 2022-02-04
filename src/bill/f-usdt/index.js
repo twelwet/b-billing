@@ -12,7 +12,7 @@ const getFuturesData = (categoryName) => {
   const pairs = getBilling(futuresTrades, categoryName);
 
   const generalInfo = {
-    name: categoryName,
+    name: `${categoryName}-USDT`,
     periodNames: [...(new Set(futuresTrades.map((trade) => trade[`period`])))],
   };
 
