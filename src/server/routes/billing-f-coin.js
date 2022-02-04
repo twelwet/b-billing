@@ -6,45 +6,22 @@ const {Category, BaseCoin} = require(`../../bill/constants`);
 
 const billingFuturesCoinRouter = new Router();
 
-billingFuturesCoinRouter.get(`/classic/TRX`, (req, res) => {
-  const {pair, generalInfo} = getFuturesCoinData(`f-classic`, `TRXUSD_PERP`);
+billingFuturesCoinRouter.get(`/:category/:baseCoin`, (req, res) => {
+  const category = req.params[`category`];
+  const baseCoin = req.params[`baseCoin`];
+  const {pair, generalInfo} = getFuturesCoinData(category, baseCoin);
   const pageContent = {
     title: generalInfo.name,
     categories: {
       spot: Object.values(Category.Spot),
       futures: Object.values(Category.Futures),
+      futuresCoin: Object.values(Category.FuturesCoin),
     },
-    baseCoins: Object.values(BaseCoin),
-    generalInfo,
-    pair,
-  };
-  res.render(`futures-coin`, pageContent);
-});
-
-billingFuturesCoinRouter.get(`/signal/BTC`, (req, res) => {
-  const {pair, generalInfo} = getFuturesCoinData(`f-signal`, `BTCUSD_PERP`);
-  const pageContent = {
-    title: generalInfo.name,
-    categories: {
-      spot: Object.values(Category.Spot),
-      futures: Object.values(Category.Futures),
+    baseCoins: {
+      spot: Object.values(BaseCoin.Spot),
+      futures: Object.values(BaseCoin.Futures),
+      futuresCoin: Object.values(BaseCoin.FuturesCoin),
     },
-    baseCoins: Object.values(BaseCoin),
-    generalInfo,
-    pair,
-  };
-  res.render(`futures-coin`, pageContent);
-});
-
-billingFuturesCoinRouter.get(`/classic/ETH`, (req, res) => {
-  const {pair, generalInfo} = getFuturesCoinData(`f-classic`, `ETHUSD_PERP`);
-  const pageContent = {
-    title: generalInfo.name,
-    categories: {
-      spot: Object.values(Category.Spot),
-      futures: Object.values(Category.Futures),
-    },
-    baseCoins: Object.values(BaseCoin),
     generalInfo,
     pair,
   };

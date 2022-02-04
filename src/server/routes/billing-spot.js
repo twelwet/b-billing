@@ -15,8 +15,13 @@ billingSpotRouter.get(`/:category/:baseCoin`, (req, res) => {
     categories: {
       spot: Object.values(Category.Spot),
       futures: Object.values(Category.Futures),
+      futuresCoin: Object.values(Category.FuturesCoin),
     },
-    baseCoins: Object.values(BaseCoin),
+    baseCoins: {
+      spot: Object.values(BaseCoin.Spot),
+      futures: Object.values(BaseCoin.Futures),
+      futuresCoin: Object.values(BaseCoin.FuturesCoin),
+    },
     pairs,
     summaryInfo,
     generalInfo,

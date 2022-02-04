@@ -14,38 +14,13 @@ billingFuturesRouter.get(`/:category`, (req, res) => {
     categories: {
       spot: Object.values(Category.Spot),
       futures: Object.values(Category.Futures),
+      futuresCoin: Object.values(Category.FuturesCoin),
     },
-    baseCoins: Object.values(BaseCoin),
-    pairs,
-    generalInfo,
-    summaryInfo,
-  };
-  res.render(`futures`, pageContent);
-});
-
-billingFuturesRouter.get(`/classic`, (req, res) => {
-  const {pairs, generalInfo, summaryInfo} = getFuturesData(`f-classic`);
-  const pageContent = {
-    title: generalInfo.name,
-    categories: {
-      spot: Object.values(Category.Spot),
+    baseCoins: {
+      spot: Object.values(BaseCoin.Spot),
+      futures: Object.values(BaseCoin.Futures),
+      futuresCoin: Object.values(BaseCoin.FuturesCoin),
     },
-    baseCoins: Object.values(BaseCoin),
-    pairs,
-    generalInfo,
-    summaryInfo,
-  };
-  res.render(`futures`, pageContent);
-});
-
-billingFuturesRouter.get(`/denis`, (req, res) => {
-  const {pairs, generalInfo, summaryInfo} = getFuturesData(`denis`);
-  const pageContent = {
-    title: generalInfo.name,
-    categories: {
-      spot: Object.values(Category.Spot),
-    },
-    baseCoins: Object.values(BaseCoin),
     pairs,
     generalInfo,
     summaryInfo,
