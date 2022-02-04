@@ -1,8 +1,16 @@
 'use strict';
 
 const Category = {
-  SIGNAL: `spot-signal`,
-  CLASSIC: `spot-classic`,
+  Spot: {
+    SIGNAL: `spot-signal`,
+    CLASSIC: `spot-classic`,
+  },
+  Futures: {
+    SIGNAL: `f-signal`,
+    CLASSIC: `f-classic`,
+    DENIS: `denis`,
+  },
+  FuturesCoin: {},
 };
 
 const Type = {BUY: `BUY`, SELL: `SELL`};
