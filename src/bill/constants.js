@@ -8,7 +8,7 @@ const Category = {
   Futures: {
     SIGNAL: `f-signal`,
     CLASSIC: `f-classic`,
-    DENIS: `denis`,
+    DENIS: `f-denis`,
   },
   FuturesCoin: {
     SIGNAL: `f-signal`,
