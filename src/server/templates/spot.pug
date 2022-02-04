@@ -50,4 +50,4 @@ block content
         td
           b(style= item < 0 ? {color: `red`} : {color: `black`})= item
       td
-        b= summaryInfo.profit
+        b(style= summaryInfo[`profit`] < 0 ? {color: `red`} : {color: `black`})= summaryInfo[`profit`]

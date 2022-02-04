@@ -30,6 +30,6 @@ block content
       each periodName in generalInfo.periodNames
         - var periodProfit = pair[`periodNames`].find((item) => item === periodName) === periodName ? pair[`periodProfits`][`${periodName}`] : 0
         td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
-      td= pair[`profit`]
+      td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
       td= pair[`fee`]
 
