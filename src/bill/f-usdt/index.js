@@ -2,7 +2,7 @@
 
 const futuresTradesRow = require(`../../../data/json/futures-trades-actual.json`);
 const {getBilling} = require(`./utils`);
-const {reducer, getCountable, getPeriodProfits} = require(`../bill-utils`);
+const {reducer, getCountable, getSummaryPeriodProfits} = require(`../bill-utils`);
 
 const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
 
@@ -18,7 +18,7 @@ const getFuturesData = (categoryName) => {
 
   const summaryInfo = {
     invest: getSumByField(pairs, `invest`),
-    profitByPeriods: getPeriodProfits(generalInfo.periodNames, pairs),
+    profitByPeriods: getSummaryPeriodProfits(generalInfo.periodNames, pairs),
     profit: getSumByField(pairs, `profit`),
     fee: getSumByField(pairs, `fee`),
   };

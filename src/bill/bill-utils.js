@@ -12,7 +12,7 @@ const getCountable = (data, fields) => {
   return data;
 };
 
-const getPeriodProfits = (periodNames, allTradesInCategory) => {
+const getSummaryPeriodProfits = (periodNames, allTradesInCategory) => {
   const periodProfits = [];
   for (const period of periodNames) {
     const periodProfit = allTradesInCategory
@@ -43,4 +43,4 @@ const sortBySellPeriod = (a, b) => {
   return aItem - bItem;
 };
 
-module.exports = {reducer, getCountable, getPeriodProfits, getAssetInfo, getSumByField, getIsClosed, sortBySellPeriod};
+module.exports = {reducer, getCountable, getSummaryPeriodProfits, getAssetInfo, getSumByField, getIsClosed, sortBySellPeriod};

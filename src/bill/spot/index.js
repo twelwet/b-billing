@@ -2,7 +2,7 @@
 
 const spotTradesRow = require(`../../../data/json/spot-trades-actual.json`);
 const {getBilling} = require(`./utils`);
-const {reducer, getCountable, getPeriodProfits} = require(`../bill-utils`);
+const {reducer, getCountable, getSummaryPeriodProfits} = require(`../bill-utils`);
 const {TradeType} = require(`../constants`);
 
 const spotTrades = getCountable(spotTradesRow, [`price`, `amount`, `total`, `fee`]);
@@ -20,7 +20,7 @@ const getSpotData = (category, baseCoin) => {
 
   const summaryInfo = {
     profit: pairs.length > 0 ? pairs.map((pair) => pair[`profit`]).reduce(reducer) : 0,
-    profitByPeriods: getPeriodProfits(generalInfo.periodNames, pairs),
+    profitByPeriods: getSummaryPeriodProfits(generalInfo.periodNames, pairs),
     totalBuy: pairs.length > 0 ? pairs.map((pair) => pair[`totalBuy`]).reduce(reducer) : 0,
     totalSell: pairs.length > 0 ? pairs.map((pair) => pair[`totalSell`]).reduce(reducer) : 0,
   };
