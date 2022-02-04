@@ -12,7 +12,7 @@ app.use(express.json());
 app.set(`views`, `./src/server/templates`);
 app.set(`view engine`, `pug`);
 
-app.use(`/billing`, billingSpotRouter);
+app.use(`/billing/spot`, billingSpotRouter);
 app.use(`/billing/futures`, billingFuturesRouter);
 app.use(`/billing/futures-coin`, billingFuturesCoinRouter);
 

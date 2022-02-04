@@ -6,7 +6,7 @@ html
     each catItem in categories[`spot`]
       each coin in baseCoins
         div
-          a(href=`/billing/${catItem}/${coin}`)= `${catItem}-${coin}`
+          a(href=`/billing/spot/${catItem}/${coin}`)= `${catItem}-${coin}`
     div
       a(href=`/billing/futures/signal`) f-signal
     div
