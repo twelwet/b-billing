@@ -3,6 +3,7 @@
 const fs = require(`fs`);
 const {promisify} = require(`util`);
 const csvToJson = require(`csvtojson`);
+const {parse} = require(`json2csv`);
 
 const saveToFile = async (path, data) => {
   const writeFile = promisify(fs.writeFile);
@@ -20,4 +21,15 @@ const getJsonFromCsv = (filename, delimiter = `,`) => {
     .then((json) => json);
 };
 
-module.exports = {saveToFile, getJsonFromCsv};
+const getCsvFromJson = (jsonData, fields) => {
+  const opts = {fields};
+
+  try {
+    return parse(jsonData, opts);
+  } catch (err) {
+    console.error(err);
+    return err;
+  }
+};
+
+module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson};
