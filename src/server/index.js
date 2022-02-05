@@ -2,9 +2,8 @@
 
 require(`dotenv`).config();
 const express = require(`express`);
-const {getPrices} = require(`../services/node-binance-api/methods`);
+const {getPrices, getSpotTrades} = require(`../services/node-binance-api/methods`);
 const {billingSpotRouter, billingFuturesRouter, billingFuturesCoinRouter} = require(`./routes`);
-const getSpotTrades = require(`../services/node-binance-api/methods/spot/get-trades`);
 const {saveToFile, getCsvFromJson} = require(`../scripts/utils`);
 const {Field} = require(`../services/node-binance-api/methods/spot/constants`);
 
@@ -24,7 +23,7 @@ app.get(`/info`, async (req, res) => {
   res.json(result);
 });
 
-app.get(`/spot/trades`, async (req, res) => {
+app.get(`/trades/spot`, async (req, res) => {
   const result = await getSpotTrades();
   await saveToFile(`data/row/spot-trades-row.csv`, await getCsvFromJson(result, Field.SPOT_TRADE));
   res.json({message: `${result.length} data entries are saved to 'data/row/spot-trades-row.csv'`});
