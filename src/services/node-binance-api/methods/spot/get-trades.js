@@ -2,7 +2,7 @@
 
 const {trades} = require(`../../service`);
 const getSpotTradeAdapter = require(`../../adapters/spot-trade-adapter`);
-const {PAIRS} = require(`./constants`);
+const {PAIRS} = require(`../constants`);
 
 const getSpotSymbolTrades = (symbol) => trades(symbol)
   .then((tradesList) => tradesList.map((trade) => getSpotTradeAdapter(symbol, trade)));

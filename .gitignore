@@ -11,3 +11,6 @@ Thumbs.db
 .idea
 *.sublime*
 .vscode
+
+# temp data
+data/row/*
