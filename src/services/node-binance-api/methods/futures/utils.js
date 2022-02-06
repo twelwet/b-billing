@@ -1,17 +1,17 @@
 'use strict';
 
-const {FuturesTradeParam} = require(`./constants`);
+const {MILLISECOND, PERIOD_INTERVAL} = require(`./constants`);
 
 const getTimePeriods = (quantity) => {
-  const interval = FuturesTradeParam.PERIOD_INTERVAL * quantity;
+  const interval = PERIOD_INTERVAL * quantity;
   const nowTimestamp = Date.now();
   const initialTimestamp = nowTimestamp - interval;
   const timePeriods = [];
 
   let timeLabel = nowTimestamp;
   do {
-    let endTime = timeLabel - FuturesTradeParam.MILLISECOND;
-    let startTime = endTime - FuturesTradeParam.PERIOD_INTERVAL;
+    let endTime = timeLabel - MILLISECOND;
+    let startTime = endTime - PERIOD_INTERVAL;
     timePeriods.push({startTime, endTime});
     timeLabel = startTime;
   } while (timeLabel >= initialTimestamp);
@@ -26,4 +26,15 @@ const getPeriodSymbolTrades = (api, adapter, symbol, params) => api(symbol, para
       .map((trade) => adapter(trade))
     : []);
 
-module.exports = {getTimePeriods, getPeriodSymbolTrades};
+const getSymbolTrades = async (api, adapter, symbol, {quantity, limit}) => {
+  const periods = getTimePeriods(quantity);
+  let result = [];
+  for (const period of periods) {
+    period.limit = limit;
+    const symbolTrades = await getPeriodSymbolTrades(api, adapter, symbol, period);
+    result = result.concat(symbolTrades);
+  }
+  return result;
+};
+
+module.exports = {getTimePeriods, getSymbolTrades};

@@ -3,25 +3,21 @@
 const {deliveryUserTrades} = require(`../../service`);
 const getFuturesCoinTradeAdapter = require(`../../adapters/futures-trade-coin-m-adapter`);
 const {FUTURES_PAIRS_COIN_M} = require(`../constants`);
-const {getTimePeriods, getPeriodSymbolTrades} = require(`./utils`);
+const {getSymbolTrades} = require(`./utils`);
 const {FuturesCoinTradeParam} = require(`./constants`);
 
-const getSymbolTrades = async (symbol) => {
-  const periods = getTimePeriods(FuturesCoinTradeParam.PERIODS);
-  let result = [];
-  for (const period of periods) {
-    period.limit = FuturesCoinTradeParam.PERIOD_LIMIT;
-    const symbolTrades = await getPeriodSymbolTrades(deliveryUserTrades, getFuturesCoinTradeAdapter, symbol, period);
-    result = result.concat(symbolTrades);
-  }
-  return result;
+const api = deliveryUserTrades;
+const adapter = getFuturesCoinTradeAdapter;
+const period = {
+  quantity: FuturesCoinTradeParam.PERIODS,
+  limit: FuturesCoinTradeParam.PERIOD_LIMIT,
 };
 
 const getFuturesCoinTrades = async () => {
   let result = [];
   const symbols = FUTURES_PAIRS_COIN_M;
   for (const symbol of symbols) {
-    const symbolTrades = await getSymbolTrades(symbol);
+    const symbolTrades = await getSymbolTrades(api, adapter, symbol, period);
     result = result.concat(symbolTrades);
   }
   return result.sort((a, b) => a[`timestamp`] - b[`timestamp`]);
