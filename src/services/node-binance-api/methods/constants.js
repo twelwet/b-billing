@@ -299,6 +299,16 @@ const Field = {
     `invest`,
     `category`,
   ],
+  WITHDRAW: [
+    `date`,
+    `amount`,
+    `coin`,
+    `network`,
+    `transactionFee`,
+    `address`,
+    `txId`,
+    `transferType`,
+  ],
 };
 
 module.exports = {PAIRS, FUTURES_PAIRS, FUTURES_PAIRS_COIN_M, Field};

@@ -8,6 +8,7 @@ const {
   billingFuturesRouter,
   billingFuturesCoinRouter,
   tradesRouter,
+  cashFlowRouter,
 } = require(`./routes`);
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(`/billing/spot`, billingSpotRouter);
 app.use(`/billing/futures`, billingFuturesRouter);
 app.use(`/billing/futures-coin`, billingFuturesCoinRouter);
 app.use(`/trades`, tradesRouter);
+app.use(`/cash-flow`, cashFlowRouter);
 
 app.get(`/info`, async (req, res) => {
   const result = await getPrices();
