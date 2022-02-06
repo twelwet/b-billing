@@ -309,6 +309,15 @@ const Field = {
     `txId`,
     `transferType`,
   ],
+  DEPOSIT: [
+    `date`,
+    `amount`,
+    `coin`,
+    `network`,
+    `address`,
+    `txId`,
+    `transferType`,
+  ],
 };
 
 module.exports = {PAIRS, FUTURES_PAIRS, FUTURES_PAIRS_COIN_M, Field};
