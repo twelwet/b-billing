@@ -5,24 +5,35 @@ const {getSpotTrades, getFuturesTrades, getFuturesCoinTrades} = require(`../../s
 const {saveToFile, getCsvFromJson} = require(`../../scripts/utils`);
 const {Field} = require(`../../services/node-binance-api/methods/constants`);
 
+const subRoute = [
+  {
+    name: `spot`,
+    filePath: `data/row/spot-trades-row.csv`,
+    fields: Field.SPOT_TRADE,
+    api: getSpotTrades,
+  },
+  {
+    name: `futures`,
+    filePath: `data/row/futures-trades-row.csv`,
+    fields: Field.FUTURES_TRADE,
+    api: getFuturesTrades,
+  },
+  {
+    name: `futures-coin`,
+    filePath: `data/row/futures-trades-coin-m-row.csv`,
+    fields: Field.FUTURES_TRADE_COIN_M,
+    api: getFuturesCoinTrades,
+  },
+];
+
 const tradesRouter = new Router();
 
-tradesRouter.get(`/spot`, async (req, res) => {
-  const result = await getSpotTrades();
-  await saveToFile(`data/row/spot-trades-row.csv`, await getCsvFromJson(result, Field.SPOT_TRADE));
-  res.json({message: `${result.length} data entries are saved to 'data/row/spot-trades-row.csv'`});
-});
-
-tradesRouter.get(`/futures`, async (req, res) => {
-  const result = await getFuturesTrades();
-  await saveToFile(`data/row/futures-trades-row.csv`, await getCsvFromJson(result, Field.FUTURES_TRADE));
-  res.json({message: `${result.length} data entries are saved to 'data/row/futures-trades-row.csv'`});
-});
-
-tradesRouter.get(`/futures-coin`, async (req, res) => {
-  const result = await getFuturesCoinTrades();
-  await saveToFile(`data/row/futures-trades-coin-m-row.csv`, await getCsvFromJson(result, Field.FUTURES_TRADE_COIN_M));
-  res.json({message: `${result.length} data entries are saved to 'data/row/futures-trades-coin-m-row.csv'`});
-});
+for (const item of subRoute) {
+  tradesRouter.get(`/${item.name}`, async (req, res) => {
+    const result = await item.api();
+    await saveToFile(`${item.filePath}`, await getCsvFromJson(result, item.fields));
+    res.json({message: `${result.length} data entries are saved to '${item.filePath}'`});
+  });
+}
 
 module.exports = tradesRouter;
