@@ -2,7 +2,7 @@
 
 require(`dotenv`).config();
 const express = require(`express`);
-const {getPrices, getSpotTrades, getFuturesTrades} = require(`../services/node-binance-api/methods`);
+const {getPrices, getSpotTrades, getFuturesTrades, getFuturesCoinTrades} = require(`../services/node-binance-api/methods`);
 const {billingSpotRouter, billingFuturesRouter, billingFuturesCoinRouter} = require(`./routes`);
 const {saveToFile, getCsvFromJson} = require(`../scripts/utils`);
 const {Field} = require(`../services/node-binance-api/methods/constants`);
@@ -33,6 +33,12 @@ app.get(`/trades/futures`, async (req, res) => {
   const result = await getFuturesTrades();
   await saveToFile(`data/row/futures-trades-row.csv`, await getCsvFromJson(result, Field.FUTURES_TRADE));
   res.json({message: `${result.length} data entries are saved to 'data/row/futures-trades-row.csv'`});
+});
+
+app.get(`/trades/futures-coin`, async (req, res) => {
+  const result = await getFuturesCoinTrades();
+  await saveToFile(`data/row/futures-trades-coin-m-row.csv`, await getCsvFromJson(result, Field.FUTURES_TRADE_COIN_M));
+  res.json({message: `${result.length} data entries are saved to 'data/row/futures-trades-coin-m-row.csv'`});
 });
 
 app.listen(

@@ -19,4 +19,11 @@ const getTimePeriods = (quantity) => {
   return timePeriods;
 };
 
-module.exports = {getTimePeriods};
+const getPeriodSymbolTrades = (api, adapter, symbol, params) => api(symbol, params)
+  .then((trades) => trades.length > 0
+    ? trades
+      .sort((a, b) => b.time - a.time)
+      .map((trade) => adapter(trade))
+    : []);
+
+module.exports = {getTimePeriods, getPeriodSymbolTrades};
