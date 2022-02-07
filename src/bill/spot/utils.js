@@ -18,11 +18,11 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     .filter((trade) => trade[`category`] === categoryName)
     .filter((trade) => trade[`baseCoin`] === baseCoin);
   const trades = allTradesInCategory.filter((trade) => trade[`tradeType`] === tradeType);
-  const assets = [...new Set(trades.map((item) => item[`market`]))];
+  const assets = [...new Set(trades.map((item) => item[`symbol`]))];
   const result = [];
 
   for (const asset of assets) {
-    const assetTrades = trades.filter((item) => item[`market`] === asset);
+    const assetTrades = trades.filter((item) => item[`symbol`] === asset);
     const {buyTrades, sellTrades, buyAmount, sellAmount} = getAssetInfo(assetTrades);
     const {totalBuy, totalSell} = getTotals(buyTrades, sellTrades);
     const profit = getAssetProfit(totalBuy, totalSell);
