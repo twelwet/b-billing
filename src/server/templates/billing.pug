@@ -3,10 +3,12 @@ extends layout
 block content
   ul
     li SPOT
-      each catItem in categories[`spot`]
-        each coin in baseCoins[`spot`]
-          div
-            a(href=`/billing/spot/${catItem}/${coin}`)= `${catItem}-${coin}`
+      div
+        a(href=`/billing/spot/spot-signal/BTC`)= `spot-signal-BTC`
+      div
+        a(href=`/billing/spot/spot-classic/BTC`)= `spot-classic-BTC`
+      div
+        a(href=`/billing/spot/spot-classic/USDT`)= `spot-classic-USDT`
     li FUTURES
       ul
         li USD-M
