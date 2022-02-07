@@ -27,6 +27,4 @@ const balances = {
   },
 };
 
-console.log(balances.futuresCoin.signal);
-
 module.exports = balances;
