@@ -27,7 +27,7 @@ const getSpotTradeAdapter = (symbol, spotTradeInstance) => {
     orderId,
     date: moment(new Date(time)).format(`DD.MM.YYYY HH:mm:ss`),
     timestamp: time,
-    market: symbol,
+    symbol,
     type: isBuyer ? Type.BUY : Type.SELL,
     price: priceFloat,
     amount: qtyFloat,
