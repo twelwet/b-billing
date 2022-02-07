@@ -5,6 +5,8 @@ block content
   table(border='1')
     tr
       th
+        b #
+      th
         b ASSET
       th
         b CLOSED
@@ -21,8 +23,9 @@ block content
           b= periodName
       th
         b PROFIT
-    each pair in pairs
+    each pair, index in pairs
       tr
+        td= index + 1
         td= pair[`asset`]
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyAmount`]
@@ -34,6 +37,8 @@ block content
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
         td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
     tr
+      td
+        b -
       td
         b Summary
       td
