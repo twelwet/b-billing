@@ -2,19 +2,13 @@ doctype html
 html
   head
     title= title
+  header
+    ul
+      li
+        a(href=`/billing`) Billing
+      li
+        a Balance
+      li
+        a Cash-flow
   body
-    each catItem in categories[`spot`]
-      each coin in baseCoins[`spot`]
-        div
-          a(href=`/billing/spot/${catItem}/${coin}`)= `${catItem}-${coin}`
-    each catFuturesItem in categories[`futures`]
-      each coinFutures in baseCoins[`futures`]
-        div
-          a(href=`/billing/futures/${catFuturesItem}`)= `${catFuturesItem}-${coinFutures}`
-    div
-      a(href=`/billing/futures-coin/f-signal/BTCUSD_PERP`)= `f-signal-BTCUSD_PERP`
-    div
-      a(href=`/billing/futures-coin/f-classic/TRXUSD_PERP`)= `f-signal-TRXUSD_PERP`
-    div
-      a(href=`/billing/futures-coin/f-classic/ETHUSD_PERP`)= `f-signal-ETHUSD_PERP`
     block content

@@ -1,5 +1,11 @@
 'use strict';
 
+const Direction = {
+  SPOT: `spot`,
+  FUTURES: `futures`,
+  FUTURES_COIN: `futures-coin`,
+};
+
 const Category = {
   Spot: {
     SIGNAL: `spot-signal`,
@@ -26,4 +32,4 @@ const Type = {BUY: `BUY`, SELL: `SELL`};
 
 const TradeType = {OPENED: `opened`, CLOSED: `closed`};
 
-module.exports = {Type, TradeType, Category, BaseCoin};
+module.exports = {Direction, Type, TradeType, Category, BaseCoin};
