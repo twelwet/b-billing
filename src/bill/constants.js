@@ -10,9 +10,9 @@ const Category = {
   Spot: {
     SIGNAL: `spot-signal`,
     CLASSIC: `spot-classic`,
-    // TEST: `test`,
-    // CHANGE: `change`,
-    // DEPOSIT: `deposit`,
+    TEST: `test`,
+    CHANGE: `change`,
+    DEPOSIT: `deposit`,
   },
   Futures: {
     SIGNAL: `f-signal`,
