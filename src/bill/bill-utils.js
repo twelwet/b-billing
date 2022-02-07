@@ -28,7 +28,9 @@ const getAssetInfo = (trades) => {
   const sellTrades = trades.filter((item) => item[`type`] === Type.SELL);
   const buyAmount = buyTrades.length > 0 ? buyTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
   const sellAmount = sellTrades.length > 0 ? sellTrades.map((item) => item[`amount`]).reduce(reducer) : 0;
-  return {buyTrades, sellTrades, buyAmount, sellAmount};
+  const buyTotal = buyTrades.length > 0 ? buyTrades.map((item) => item[`total`]).reduce(reducer) : 0;
+  const sellTotal = sellTrades.length > 0 ? sellTrades.map((item) => item[`total`]).reduce(reducer) : 0;
+  return {buyTrades, sellTrades, buyAmount, sellAmount, buyTotal, sellTotal};
 };
 
 const getSumByField = (trades, fieldName) => trades.length > 0
