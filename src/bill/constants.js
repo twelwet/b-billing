@@ -17,8 +17,8 @@ const Category = {
     DENIS: `f-denis`,
   },
   FuturesCoin: {
-    SIGNAL: `f-signal`,
-    CLASSIC: `f-classic`,
+    SIGNAL: `f-coin-signal`,
+    CLASSIC: `f-coin-classic`,
   },
 };
 
