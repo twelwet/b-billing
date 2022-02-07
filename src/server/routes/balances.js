@@ -5,7 +5,8 @@ const {Router} = require(`express`);
 const balancesRouter = new Router();
 
 balancesRouter.get(`/`, (req, res) => {
-  res.render(`balances`);
+  const pageContent = {title: `Balances`};
+  res.render(`balances`, pageContent);
 });
 
 module.exports = balancesRouter;
