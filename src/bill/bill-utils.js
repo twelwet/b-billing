@@ -43,4 +43,31 @@ const sortBySellPeriod = (a, b) => {
   return aItem - bItem;
 };
 
-module.exports = {reducer, getCountable, getSummaryPeriodProfits, getAssetInfo, getSumByField, getIsClosed, sortBySellPeriod};
+const getPeriodProfits = (symbolTradesInCategory, periodNames) => {
+  const periodProfits = {};
+  for (const period of periodNames) {
+    periodProfits[`${period}`] = symbolTradesInCategory
+      .filter((trade) => trade[`period`] === period)
+      .map((trade) => trade[`realizedPnl`]).reduce(reducer);
+  }
+  return periodProfits;
+};
+
+const getAssetProps = (symbolTradesInCategory) => {
+  const {buyAmount, sellAmount} = getAssetInfo(symbolTradesInCategory);
+  const periodNames = [...(new Set(symbolTradesInCategory.map((trade) => trade[`period`])))];
+  const periodProfits = getPeriodProfits(symbolTradesInCategory, periodNames);
+
+  return {
+    buyAmount,
+    sellAmount,
+    profit: getSumByField(symbolTradesInCategory, `realizedPnl`),
+    fee: getSumByField(symbolTradesInCategory, `fee`),
+    invest: getSumByField(symbolTradesInCategory, `invest`),
+    isClosed: getIsClosed(buyAmount, sellAmount),
+    periodNames,
+    periodProfits,
+  };
+};
+
+module.exports = {reducer, getCountable, getSummaryPeriodProfits, getAssetInfo, getSumByField, getIsClosed, sortBySellPeriod, getAssetProps};
