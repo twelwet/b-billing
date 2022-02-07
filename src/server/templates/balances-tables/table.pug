@@ -1,3 +1,29 @@
 extends ../layout
 
 block content
+  h3= title
+  table(border='1')
+    tr
+      th
+        b #
+      th
+        b ASSET
+      th
+        b CLOSED
+      th
+        b BUY (coins)
+      th
+        b BUY (coins)
+      th
+        b BUY (total)
+      th
+        b SELL (total)
+    each item, index in data
+      tr
+        td= index + 1
+        td= item[`asset`]
+        td= item[`isClosed`] ? `yes` : `no`
+        td= item[`buyAmount`]
+        td= item[`sellAmount`]
+        td= item[`buyTotal`]
+        td= item[`sellTotal`]

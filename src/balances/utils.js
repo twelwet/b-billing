@@ -1,6 +1,8 @@
 'use strict';
 
-const {getAssetInfo} = require(`../bill/bill-utils`);
+const {getAssetInfo, getIsClosed} = require(`../bill/bill-utils`);
+
+const sortByIsClosed = (a, b) => a[`isClosed`] - b[`isClosed`];
 
 const getBalances = (trades, category) => {
   const categoryTrades = trades.filter((trade) => trade[`category`] === category);
@@ -11,10 +13,11 @@ const getBalances = (trades, category) => {
   for (const symbol of symbols) {
     const symbolTrades = categoryTrades.filter((trade) => trade[`symbol`] === symbol);
     const {buyAmount, sellAmount, buyTotal, sellTotal} = getAssetInfo(symbolTrades);
-    balances.push({asset: symbol, buyAmount, sellAmount, buyTotal, sellTotal});
+    const isClosed = getIsClosed(buyAmount, sellAmount);
+    balances.push({asset: symbol, isClosed, buyAmount, sellAmount, buyTotal, sellTotal});
   }
 
-  return balances;
+  return balances.sort(sortByIsClosed);
 };
 
 module.exports = {getBalances};
