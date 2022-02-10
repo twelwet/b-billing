@@ -251,7 +251,7 @@ const Field = {
     `orderId`,
     `date`,
     `timestamp`,
-    `market`,
+    `symbol`,
     `type`,
     `price`,
     `amount`,
