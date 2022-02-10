@@ -1,7 +1,7 @@
 'use strict';
 
 const {Router} = require(`express`);
-const {getSpotTrades, getFuturesTrades, getFuturesCoinTrades} = require(`../../services/node-binance-api/methods`);
+const {getSpotTrades, getFuturesTrades, getFuturesCoinTrades, divideSymbolsToGroups} = require(`../../services/node-binance-api/methods`);
 const {saveToFile, getCsvFromJson} = require(`../../scripts/utils`);
 const {Field} = require(`../../services/node-binance-api/methods/constants`);
 
@@ -35,5 +35,21 @@ for (const item of subRoute) {
     res.json({message: `${result.length} data entries are saved to '${item.filePath}'`});
   });
 }
+
+// TODO temporary route to find all trades in spot market
+const getPath = (groupNumber, entriesQuantiy) => entriesQuantiy === 0
+  ? `data/row/temp/null-spot-trades-row-00${groupNumber}`
+  : `data/row/temp/spot-trades-row-00${groupNumber}`;
+
+tradesRouter.get(`/spot/:groupNumber`, async (req, res) => {
+  const groupNumber = req.params[`groupNumber`];
+  const groups = await divideSymbolsToGroups(50);
+  const group = groups[groupNumber];
+  const result = await getSpotTrades(group);
+  const entriesQuantity = result.length;
+  const path = getPath(groupNumber, entriesQuantity);
+  await saveToFile(path, await getCsvFromJson(result, Field.SPOT_TRADE));
+  res.json({message: `${result.length} data entries are saved to '${path}', quantity of groups: ${groups.length}`});
+});
 
 module.exports = tradesRouter;
