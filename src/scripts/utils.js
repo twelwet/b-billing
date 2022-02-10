@@ -39,6 +39,7 @@ const getFileList = async (path) => {
 
   } catch (error) {
     console.log(`Error: Can't read data from '${path}'.`);
+    return error;
   }
 };
 
@@ -50,7 +51,7 @@ const mergeCsvFiles = (directoryPath, resultFilePath, rowNames, delimiter = `,`)
       result = result.concat(fileEntries);
     }
     await saveToFile(resultFilePath, await getCsvFromJson(result, rowNames));
-  })
+  });
 };
 
 module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles};
