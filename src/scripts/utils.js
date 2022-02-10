@@ -32,4 +32,25 @@ const getCsvFromJson = (jsonData, fields) => {
   }
 };
 
-module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson};
+const getFileList = async (path) => {
+  const readDir = promisify(fs.readdir);
+  try {
+    return await readDir(path).then((filenames) => filenames);
+
+  } catch (error) {
+    console.log(`Error: Can't read data from '${path}'.`);
+  }
+};
+
+const mergeCsvFiles = (directoryPath, resultFilePath, rowNames, delimiter = `,`) => {
+  getFileList(directoryPath).then(async (list) => {
+    let result = [];
+    for (const filename of list) {
+      const fileEntries = await getJsonFromCsv(`${directoryPath}/${filename}`, delimiter);
+      result = result.concat(fileEntries);
+    }
+    await saveToFile(resultFilePath, await getCsvFromJson(result, rowNames));
+  })
+};
+
+module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles};
