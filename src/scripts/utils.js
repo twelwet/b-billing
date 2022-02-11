@@ -4,6 +4,8 @@ const fs = require(`fs`);
 const {promisify} = require(`util`);
 const csvToJson = require(`csvtojson`);
 const {parse} = require(`json2csv`);
+const {MutatedRule} = require(`./constants`);
+const {getHistoricalSymbolPrice} = require(`../services/node-binance-api/methods`);
 
 const saveToFile = async (path, data) => {
   const writeFile = promisify(fs.writeFile);
@@ -54,4 +56,19 @@ const mergeCsvFiles = (directoryPath, resultFilePath, rowNames, delimiter = `,`)
   });
 };
 
-module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles};
+const mutateTrade = async (trade) => {
+  const markets = Object.keys(MutatedRule);
+  for (const market of markets) {
+    if (trade[`symbol`].endsWith(market)) {
+      trade[`symbol`] = `${trade[`symbol`].substring(0, trade[`symbol`].length - market.length)}${MutatedRule[market]}`;
+      trade[`price`] = await getHistoricalSymbolPrice(trade[`symbol`], trade[`timestamp`]);
+      trade[`total`] = trade[`price`] * trade[`amount`];
+      trade[`fee`] = trade[`total`] / 1000;
+      trade[`feeCoin`] = MutatedRule[trade[`baseCoin`]];
+      trade[`baseCoin`] = MutatedRule[trade[`baseCoin`]];
+      return trade;
+    }
+  }
+};
+
+module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrade};

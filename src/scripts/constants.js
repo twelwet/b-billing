@@ -5,6 +5,9 @@ const FilePath = {
     CSV: `data/csv/spot-trades-actual.csv`,
     JSON: `data/json/spot-trades-actual.json`,
   },
+  SpotMutated: {
+    CSV: `data/csv/spot-trades-only-mutated.csv`,
+  },
   FuturesUsdM: {
     CSV: `data/csv/futures-trades-actual.csv`,
     JSON: `data/json/futures-trades-actual.json`,
@@ -15,4 +18,9 @@ const FilePath = {
   },
 };
 
-module.exports = {FilePath};
+const MutatedRule = {
+  USDT: `BTC`,
+  BTC: `USDT`,
+};
+
+module.exports = {FilePath, MutatedRule};
