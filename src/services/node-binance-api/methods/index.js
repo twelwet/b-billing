@@ -7,6 +7,7 @@ const getFuturesCoinTrades = require(`./futures/get-coin-trades`);
 const getWithdrawHistory = require(`./cash-flow/get-withdraw-history`);
 const getDepositHistory = require(`./cash-flow/get-deposit-history`);
 const divideSymbolsToGroups = require(`./spot/divide-symbols-to-groups`);
+const getHistoricalSymbolPrice = require(`./spot/get-historical-symbol-price`);
 
 module.exports = {
   getPrices,
@@ -16,4 +17,5 @@ module.exports = {
   getWithdrawHistory,
   getDepositHistory,
   divideSymbolsToGroups,
+  getHistoricalSymbolPrice,
 };
