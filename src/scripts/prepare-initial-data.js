@@ -9,5 +9,6 @@ const prepareJson = (pathToCsvFile, resultPath) => {
 };
 
 prepareJson(FilePath.Spot.CSV, FilePath.Spot.JSON);
+prepareJson(FilePath.SpotMutated.CSV, FilePath.SpotMutated.JSON);
 prepareJson(FilePath.FuturesUsdM.CSV, FilePath.FuturesUsdM.JSON);
 prepareJson(FilePath.FuturesCoinM.CSV, FilePath.FuturesCoinM.JSON);
