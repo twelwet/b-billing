@@ -1,11 +1,9 @@
 'use strict';
 
-const spotTradesRow = require(`../../../data/json/spot-trades-actual.json`);
 const {getBilling} = require(`./utils`);
-const {reducer, getCountable, getSummaryPeriodProfits} = require(`../bill-utils`);
+const {reducer, getSummaryPeriodProfits} = require(`../bill-utils`);
 const {TradeType} = require(`../constants`);
-
-const spotTrades = getCountable(spotTradesRow, [`price`, `amount`, `total`, `fee`]);
+const {spotTrades} = require(`../../data-entry-point`);
 
 const getSpotData = (category, baseCoin) => {
   const closedPairs = getBilling(spotTrades, category, TradeType.CLOSED, baseCoin);
