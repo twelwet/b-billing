@@ -1,7 +1,7 @@
 'use strict';
 
 const {getBilling} = require(`./utils`);
-const {reducer, getSummaryPeriodProfits} = require(`../bill-utils`);
+const {reducer, sumAssetsDataByPeriods} = require(`../bill-utils`);
 const {futuresTrades} = require(`../../data-entry-point`);
 
 const getSumByField = (data, field) => data.length > 0 ? data.map((pair) => pair[`${field}`]).reduce(reducer) : 0;
@@ -16,7 +16,8 @@ const getFuturesData = (categoryName) => {
 
   const summaryInfo = {
     invest: getSumByField(pairs, `invest`),
-    profitByPeriods: getSummaryPeriodProfits(generalInfo.periodNames, pairs),
+    profitByPeriods: sumAssetsDataByPeriods(generalInfo.periodNames, pairs, `periodProfits`),
+    feeByPeriods: sumAssetsDataByPeriods(generalInfo.periodNames, pairs, `periodFees`),
     profit: getSumByField(pairs, `profit`),
     fee: getSumByField(pairs, `fee`),
   };

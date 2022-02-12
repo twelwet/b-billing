@@ -19,9 +19,10 @@ const getBilling = (allTrades, categoryName) => {
       isClosed,
       periodNames,
       periodProfits,
+      periodFees,
     } = getAssetProps(assetTrades);
 
-    result.push({asset, invest, buyAmount, sellAmount, isClosed, periodNames, periodProfits, profit, fee});
+    result.push({asset, invest, buyAmount, sellAmount, isClosed, periodNames, periodProfits, periodFees, profit, fee});
   }
 
   return result.sort(sortBySellPeriod);
