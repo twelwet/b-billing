@@ -1,7 +1,7 @@
 'use strict';
 
 const {getBilling} = require(`./utils`);
-const {reducer, getSummaryPeriodProfits} = require(`../bill-utils`);
+const {reducer, sumAssetsDataByPeriods} = require(`../bill-utils`);
 const {TradeType} = require(`../constants`);
 const {spotTrades} = require(`../../data-entry-point`);
 
@@ -18,7 +18,7 @@ const getSpotData = (category, baseCoin) => {
 
   const summaryInfo = {
     profit: pairs.length > 0 ? pairs.map((pair) => pair[`profit`]).reduce(reducer) : 0,
-    profitByPeriods: getSummaryPeriodProfits(generalInfo.periodNames, pairs),
+    profitByPeriods: sumAssetsDataByPeriods(generalInfo.periodNames, pairs, `periodProfits`),
     totalBuy: pairs.length > 0 ? pairs.map((pair) => pair[`totalBuy`]).reduce(reducer) : 0,
     totalSell: pairs.length > 0 ? pairs.map((pair) => pair[`totalSell`]).reduce(reducer) : 0,
   };
