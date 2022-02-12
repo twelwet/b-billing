@@ -1,10 +1,8 @@
 'use strict';
 
-const futuresTradesRow = require(`../../../data/json/futures-trades-actual.json`);
 const {getBilling} = require(`./utils`);
-const {reducer, getCountable, getSummaryPeriodProfits} = require(`../bill-utils`);
-
-const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
+const {reducer, getSummaryPeriodProfits} = require(`../bill-utils`);
+const {futuresTrades} = require(`../../data-entry-point`);
 
 const getSumByField = (data, field) => data.length > 0 ? data.map((pair) => pair[`${field}`]).reduce(reducer) : 0;
 
