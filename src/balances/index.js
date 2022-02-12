@@ -1,16 +1,8 @@
 'use strict';
 
-const spotTradesRow = require(`../../data/json/spot-trades-actual.json`);
-const futuresTradesRow = require(`../../data/json/futures-trades-actual.json`);
-const futuresCoinTradesRow = require(`../../data/json/futures-trades-coin-m-actual.json`);
 const {Category} = require(`../bill/constants`);
-
-const {getCountable} = require(`../bill/bill-utils`);
 const {getBalances} = require(`./utils`);
-
-const spotTrades = getCountable(spotTradesRow, [`price`, `amount`, `total`, `fee`]);
-const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
-const futuresCoinTrades = getCountable(futuresCoinTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
+const {spotTrades, futuresTrades, futuresCoinTrades} = require(`../data-entry-point`);
 
 const balances = {
   [`${Category.Spot.SIGNAL}`]: getBalances(spotTrades, Category.Spot.SIGNAL),
