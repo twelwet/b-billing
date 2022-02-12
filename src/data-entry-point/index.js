@@ -11,7 +11,7 @@ const getSpotTrades = () => {
   const mutatedTrades = getCountable(mutatedTradesRow, [`price`, `amount`, `total`, `fee`, `isShift`]);
   const tradesWithoutMutatedItems = spotTradesActual.filter((trade) => trade[`isShift`] === 0);
   return tradesWithoutMutatedItems.concat(mutatedTrades);
-}
+};
 
 const spotTrades = getSpotTrades();
 const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);

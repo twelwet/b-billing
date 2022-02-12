@@ -69,6 +69,15 @@ const mutateTrade = async (trade) => {
       return trade;
     }
   }
+  return {};
 };
 
-module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrade};
+const mutateTrades = async (trades) => {
+  for (const [index, trade] of trades.entries()) {
+    await mutateTrade(trade);
+    console.log(`${index + 1} entry of ${trades.length} entries is completed.`);
+  }
+  return trades;
+};
+
+module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrades};
