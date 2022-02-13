@@ -16,9 +16,10 @@ const getBilling = (allTrades, categoryName, coin) => {
     isClosed,
     periodNames,
     periodProfits,
+    periodFees,
   } = getAssetProps(trades);
 
-  return {asset: coin, invest, buyAmount, sellAmount, isClosed, periodNames, periodProfits, profit, fee};
+  return {asset: coin, invest, buyAmount, sellAmount, isClosed, periodNames, periodProfits, periodFees, profit, fee};
 };
 
 module.exports = {getBilling};

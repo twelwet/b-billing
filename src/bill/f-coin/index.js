@@ -11,7 +11,16 @@ const getFuturesCoinData = (categoryName, coin) => {
     periodNames: [...(new Set(futuresCoinTrades.map((trade) => trade[`period`])))],
   };
 
-  return {pair, generalInfo};
+  const summaryInfo = {
+    invest: pair[`invest`],
+    profitByPeriods: pair[`periodProfits`],
+    feeByPeriods: pair[`periodFees`],
+    profit: pair[`profit`],
+    fee: pair[`fee`],
+  };
+
+  console.log(summaryInfo);
+  return {pair, generalInfo, summaryInfo};
 };
 
 module.exports = getFuturesCoinData;
