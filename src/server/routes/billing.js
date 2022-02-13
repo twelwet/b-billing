@@ -55,11 +55,12 @@ billingRouter.get(`/futures/:category`, (req, res) => {
 billingRouter.get(`/futures-coin/:category/:baseCoin`, (req, res) => {
   const category = req.params[`category`];
   const baseCoin = req.params[`baseCoin`];
-  const {pair, generalInfo} = getFuturesCoinData(category, baseCoin);
+  const {pair, generalInfo, summaryInfo} = getFuturesCoinData(category, baseCoin);
   const title = generalInfo.name;
   const pageContent = getPageContent(title);
   pageContent[`pair`] = pair;
   pageContent[`generalInfo`] = generalInfo;
+  pageContent[`summaryInfo`] = summaryInfo;
   res.render(`./billing-tables/futures-coin`, pageContent);
 });
 

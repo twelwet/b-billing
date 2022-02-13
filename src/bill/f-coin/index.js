@@ -1,6 +1,7 @@
 'use strict';
 
 const {getBilling} = require(`./utils`);
+const {sumAssetsDataByPeriods} = require(`../bill-utils`);
 const {futuresCoinTrades} = require(`../../data-entry-point`);
 
 const getFuturesCoinData = (categoryName, coin) => {
@@ -13,13 +14,12 @@ const getFuturesCoinData = (categoryName, coin) => {
 
   const summaryInfo = {
     invest: pair[`invest`],
-    profitByPeriods: pair[`periodProfits`],
-    feeByPeriods: pair[`periodFees`],
+    profitByPeriods: sumAssetsDataByPeriods(generalInfo.periodNames, [pair], `periodProfits`),
+    feeByPeriods: sumAssetsDataByPeriods(generalInfo.periodNames, [pair], `periodFees`),
     profit: pair[`profit`],
     fee: pair[`fee`],
   };
 
-  console.log(summaryInfo);
   return {pair, generalInfo, summaryInfo};
 };
 

@@ -5,6 +5,8 @@ block content
   table(border='1')
     tr
       th
+        b #
+      th
         b ASSET
       th
         b INVEST (~)
@@ -18,10 +20,9 @@ block content
         th
           b= periodName
       th
-        b PROFIT
-      th
-        b FEE
+        b RESULT
     tr
+      td 1
       td= pair[`asset`]
       td= pair[`invest`]
       td= pair[`isClosed`] ? `yes` : `no`
@@ -29,7 +30,78 @@ block content
       td= pair[`sellAmount`]
       each periodName in generalInfo.periodNames
         - var periodProfit = pair[`periodNames`].find((item) => item === periodName) === periodName ? pair[`periodProfits`][`${periodName}`] : 0
-        td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
-      td(style= pair[`profit`] < 0 ? {color: `red`} : {color: `black`})= pair[`profit`]
-      td= pair[`fee`]
-
+        td= periodProfit
+      td= pair[`profit`]
+    tr
+      td
+        b -
+      td
+        b PROFIT before FEE
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      each item in summaryInfo.profitByPeriods
+        td
+          b= item
+      td
+        b= summaryInfo[`profit`]
+    tr
+      td
+        b -
+      td
+        b FEE
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      each item in summaryInfo.feeByPeriods
+        td
+          b= item
+      td
+        b= summaryInfo.fee
+    tr
+      td
+        b -
+      td
+        b PROFIT after FEE
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      each item, index in summaryInfo.profitByPeriods
+        td
+          b= item - summaryInfo.feeByPeriods[index]
+      td
+        - var profitAfterFee = summaryInfo.profit - summaryInfo.fee
+        b(style= profitAfterFee < 0 ? {color: `red`} : {color: `green`})= profitAfterFee
+    tr
+      td
+        b -
+      td
+        b Summary
+      td
+        b= summaryInfo.invest
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      each item in summaryInfo.profitByPeriods
+        td
+          b -
+      td
+        b -

@@ -2,6 +2,7 @@
 
 const {getAssetProps} = require(`../bill-utils`);
 
+// TODO Remove duplicated code (unite with f-usdt getBilling func)
 const getBilling = (allTrades, categoryName, coin) => {
   const trades = allTrades
     .filter((trade) => trade[`category`] === categoryName)
