@@ -32,6 +32,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     const periodProfits = {};
     for (const period of periodNames) {
       const sellByPeriod = sellTrades.filter((trade) => trade[`period`] === period).map((trade) => trade[`total`]).reduce(reducer);
+      // TODO perhaps the calculation algorithm should be revised
       periodProfits[`${period}`] = profit * sellByPeriod / totalSell;
     }
 
