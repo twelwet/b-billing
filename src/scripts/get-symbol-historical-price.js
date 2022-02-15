@@ -8,4 +8,9 @@ const TIME_STRING = `10.02.2022 00:00:00`;
 
 const timeStamp = moment(TIME_STRING, `DD.MM.YYYY HH:mm:ss`).valueOf();
 
-getHistoricalSymbolPrice(SYMBOL, timeStamp).then((data) => console.log(data));
+getHistoricalSymbolPrice(SYMBOL, timeStamp)
+  .then((price) => console.log({
+    symbol: SYMBOL,
+    date: moment(timeStamp).format(`DD.MM.YYYY HH:mm:ss`),
+    price,
+  }));
