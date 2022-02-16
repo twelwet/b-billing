@@ -17,4 +17,5 @@ const spotTrades = getSpotTrades();
 const futuresTrades = getCountable(futuresTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
 const futuresCoinTrades = getCountable(futuresCoinTradesRow, [`price`, `amount`, `total`, `realizedPnl`, `fee`, `leverage`, `invest`]);
 
+// TODO Sort all trades in chronological order before export
 module.exports = {spotTrades, futuresTrades, futuresCoinTrades};
