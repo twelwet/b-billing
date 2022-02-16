@@ -5,6 +5,7 @@ const {promisify} = require(`util`);
 const csvToJson = require(`csvtojson`);
 const {parse} = require(`json2csv`);
 const {MutatedRule} = require(`./constants`);
+const {getSumByField} = require(`../bill/bill-utils`);
 const {getHistoricalSymbolPrice} = require(`../services/node-binance-api/methods`);
 
 const saveToFile = async (path, data) => {
@@ -80,4 +81,22 @@ const mutateTrades = async (trades) => {
   return trades;
 };
 
-module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrades};
+const getOrders = (trades) => {
+  const orderIds = [...(new Set(trades.map((trade) => trade[`orderId`])))];
+  const orders = [];
+  for (const orderId of orderIds) {
+    const tradesInOrder = trades.filter((trade) => trade[`orderId`] === orderId);
+    const {
+      date, timestamp, symbol, type, feeCoin, category, period, baseCoin, isShift, note,
+    } = tradesInOrder[0];
+    const amount = getSumByField(tradesInOrder, `amount`);
+    const total = getSumByField(tradesInOrder, `total`);
+    const fee = getSumByField(tradesInOrder, `fee`);
+    orders.push({
+      date, timestamp, symbol, type, amount, total, fee, feeCoin, category, period, baseCoin, isShift, note, orderId,
+    });
+  }
+  return orders;
+};
+
+module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrades, getOrders};
