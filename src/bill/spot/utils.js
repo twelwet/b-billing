@@ -1,6 +1,6 @@
 'use strict';
 
-const {reducer, getAssetInfo, sortBySellPeriod, getIsClosed} = require(`../bill-utils`);
+const {reducer, getAssetInfo, sortBySellPeriod, getIsClosed, getSumByField} = require(`../bill-utils`);
 
 const getTotals = (buyTradesList, sellTradesList) => {
   return {
@@ -28,12 +28,25 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     const profit = getAssetProfit(totalBuy, totalSell);
     const isClosed = getIsClosed(buyAmount, sellAmount);
 
-    const periodNames = [...(new Set(sellTrades.map((trade) => trade[`period`])))];
+    const periodNames = [...(new Set(allTrades.map((trade) => trade[`period`])))];
+    const price = {buy: 0, sell: 0};
     const periodProfits = {};
+
     for (const period of periodNames) {
-      const sellByPeriod = sellTrades.filter((trade) => trade[`period`] === period).map((trade) => trade[`total`]).reduce(reducer);
-      // TODO perhaps the calculation algorithm should be revised
-      periodProfits[`${period}`] = profit * sellByPeriod / totalSell;
+      const periodTrades = assetTrades.filter((trade) => trade[`period`] === period);
+      const periodTradesBuy = periodTrades.length > 0
+        ? periodTrades.filter((trade) => trade[`type`] === `BUY`)
+        : [{amount: 0, total: 0}];
+      const periodTradesSell = periodTrades.length > 0
+        ? periodTrades.filter((trade) => trade[`type`] === `SELL`)
+        : [{amount: 0, total: 0}];
+      const amountBuyInPeriod = getSumByField(periodTradesBuy, `amount`);
+      const amountSellInPeriod = getSumByField(periodTradesSell, `amount`);
+      const totalBuyInPeriod = getSumByField(periodTradesBuy, `total`);
+      const totalSellInPeriod = getSumByField(periodTradesSell, `total`);
+      price.buy = totalBuyInPeriod / amountBuyInPeriod || price.buy;
+      price.sell = totalSellInPeriod / amountSellInPeriod || price.sell;
+      periodProfits[`${period}`] = totalSellInPeriod - price.buy * amountSellInPeriod;
     }
 
     result.push({asset, buyAmount, sellAmount, totalBuy, totalSell, isClosed, profit, periodProfits, periodNames});

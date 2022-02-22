@@ -1,9 +1,9 @@
 'use strict';
 
 const {spotTrades} = require(`../data-entry-point`);
-const {getCsvFromJson, saveToFile} = require(`./utils`);
+const {getCsvFromJson, saveToFile, getOrders} = require(`./utils`);
 
-const TARGET_SYMBOL = `1INCH`;
+const TARGET_SYMBOL = `BTT`;
 
 // TODO This constant should be relocated
 const FIELDS = [
@@ -30,4 +30,6 @@ const resultTrades = spotTrades
   .filter((trade) => trade[`symbol`]
     .includes(TARGET_SYMBOL));
 
-saveToFile(`data/temp/${TARGET_SYMBOL}-trades.csv`, getCsvFromJson(resultTrades, FIELDS));
+const resultOrders = getOrders(resultTrades);
+
+saveToFile(`data/temp/${TARGET_SYMBOL}-orders.csv`, getCsvFromJson(resultOrders, FIELDS));
