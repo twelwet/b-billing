@@ -87,13 +87,14 @@ const getOrders = (trades) => {
   for (const orderId of orderIds) {
     const tradesInOrder = trades.filter((trade) => trade[`orderId`] === orderId);
     const {
-      date, timestamp, symbol, type, feeCoin, category, period, baseCoin, isShift, note,
+      date, timestamp, symbol, type, feeCoin, category, period, baseCoin, isShift, note, tradeType
     } = tradesInOrder[0];
     const amount = getSumByField(tradesInOrder, `amount`);
     const total = getSumByField(tradesInOrder, `total`);
     const fee = getSumByField(tradesInOrder, `fee`);
+    const price = total / amount;
     orders.push({
-      date, timestamp, symbol, type, amount, total, fee, feeCoin, category, period, baseCoin, isShift, note, orderId,
+      date, timestamp, symbol, type, price, amount, total, fee, feeCoin, category, period, baseCoin, isShift, note, orderId, tradeType,
     });
   }
   return orders;
