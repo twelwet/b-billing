@@ -2,6 +2,7 @@
 
 const {Router} = require(`express`);
 const getSpotData = require(`../../bill/spot`);
+const {getAssetData} = require(`../../bill/spot/asset`);
 const getFuturesData = require(`../../bill/f-usdt`);
 const getFuturesCoinData = require(`../../bill/f-coin`);
 const {Category, BaseCoin} = require(`../../bill/constants`);
@@ -38,6 +39,7 @@ billingRouter.get(`/spot/:category/:baseCoin`, (req, res) => {
   pageContent[`pairs`] = pairs;
   pageContent[`generalInfo`] = generalInfo;
   pageContent[`summaryInfo`] = summaryInfo;
+  pageContent[`category`] = category;
   res.render(`./billing-tables/spot`, pageContent);
 });
 
@@ -62,6 +64,14 @@ billingRouter.get(`/futures-coin/:category/:baseCoin`, (req, res) => {
   pageContent[`generalInfo`] = generalInfo;
   pageContent[`summaryInfo`] = summaryInfo;
   res.render(`./billing-tables/futures-coin`, pageContent);
+});
+
+billingRouter.get(`/spot/orders/:category/:asset`, (req, res) => {
+  const category = req.params[`category`];
+  const asset = req.params[`asset`];
+  const {orders, generalInfo, summaryInfo} = getAssetData(asset, category);
+  const title = generalInfo.name;
+  res.render(`./billing-asset/spot`, {title, orders, generalInfo, summaryInfo});
 });
 
 module.exports = billingRouter;
