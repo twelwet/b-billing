@@ -19,6 +19,8 @@ const getSpotData = (category, baseCoin) => {
   const summaryInfo = {
     profit: pairs.length > 0 ? pairs.map((pair) => pair[`profit`]).reduce(reducer) : 0,
     profitByPeriods: sumAssetsDataByPeriods(generalInfo.periodNames, pairs, `periodProfits`),
+    fee: pairs.length > 0 ? pairs.map((pair) => pair[`fee`]).reduce(reducer) : 0,
+    periodFee: sumAssetsDataByPeriods(generalInfo.periodNames, pairs, `periodFee`),
     buyTotal: pairs.length > 0 ? pairs.map((pair) => pair[`buyTotal`]).reduce(reducer) : 0,
     sellTotal: pairs.length > 0 ? pairs.map((pair) => pair[`sellTotal`]).reduce(reducer) : 0,
   };

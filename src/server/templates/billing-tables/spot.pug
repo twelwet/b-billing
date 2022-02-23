@@ -40,7 +40,7 @@ block content
       td
         b -
       td
-        b Summary
+        b PROFIT before FEE
       td
         b -
       td
@@ -53,6 +53,47 @@ block content
         b= summaryInfo.sellTotal
       each item in summaryInfo.profitByPeriods
         td
-          b(style= item < 0 ? {color: `red`} : {color: `black`})= item
+          b= item
       td
-        b(style= summaryInfo[`profit`] < 0 ? {color: `red`} : {color: `black`})= summaryInfo[`profit`]
+        b= summaryInfo[`profit`]
+    tr
+      td
+        b -
+      td
+        b FEE
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      each item in summaryInfo[`periodFee`]
+        td
+          b= item
+      td
+        b= summaryInfo[`fee`]
+    tr
+      td
+        b -
+      td
+        b PROFIT after FEE
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      td
+        b -
+      each item, index in summaryInfo.profitByPeriods
+        td
+          b= item - summaryInfo[`periodFee`][index]
+      td
+        - var profitAfterFee = summaryInfo.profit - summaryInfo.fee
+        b(style= profitAfterFee < 0 ? {color: `red`} : {color: `green`})= profitAfterFee

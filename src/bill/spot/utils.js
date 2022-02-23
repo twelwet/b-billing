@@ -18,6 +18,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     const periodNames = [...(new Set(allTrades.map((trade) => trade[`period`])))];
     const price = {buy: 0, sell: 0};
     const periodProfits = {};
+    const periodFee = {};
 
     for (const period of periodNames) {
       const periodTrades = assetTrades.filter((trade) => trade[`period`] === period);
@@ -34,11 +35,12 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
       price.buy = totalBuyInPeriod / amountBuyInPeriod || price.buy;
       price.sell = totalSellInPeriod / amountSellInPeriod || price.sell;
       periodProfits[`${period}`] = totalSellInPeriod - price.buy * amountSellInPeriod;
+      periodFee[`${period}`] = getSumByField(periodTradesSell, `fee`) || 0;
     }
 
     const profit = Object.values(periodProfits).reduce(reducer);
-
-    result.push({asset, buyAmount, sellAmount, buyTotal, sellTotal, isClosed, profit, periodProfits, periodNames});
+    const fee = Object.values(periodFee).reduce(reducer);
+    result.push({asset, buyAmount, sellAmount, buyTotal, sellTotal, isClosed, profit, periodProfits, periodNames, periodFee, fee});
   }
   return result.sort(sortBySellPeriod);
 };
