@@ -32,6 +32,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
       const amountSellInPeriod = getSumByField(periodTradesSell, `amount`);
       const totalBuyInPeriod = getSumByField(periodTradesBuy, `total`);
       const totalSellInPeriod = getSumByField(periodTradesSell, `total`);
+      // TODO Incorrect evaluating of periodProfits
       price.buy = totalBuyInPeriod / amountBuyInPeriod || price.buy;
       price.sell = totalSellInPeriod / amountSellInPeriod || price.sell;
       periodProfits[`${period}`] = totalSellInPeriod - price.buy * amountSellInPeriod;
