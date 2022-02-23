@@ -6,8 +6,8 @@ const FilePath = {
     JSON: `data/json/spot-trades-actual.json`,
   },
   SpotMutated: {
-    CSV: `data/csv/spot-trades-only-mutated.csv`,
-    JSON: `data/json/spot-trades-only-mutated.json`,
+    CSV: `data/csv/spot-trades-mutated.csv`,
+    JSON: `data/json/spot-trades-mutated.json`,
   },
   FuturesUsdM: {
     CSV: `data/csv/futures-trades-actual.csv`,

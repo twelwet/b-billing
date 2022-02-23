@@ -74,6 +74,7 @@ const mutateTrade = async (trade) => {
 };
 
 const mutateTrades = async (trades) => {
+  console.log(`Getting historical info about ${trades.length} entries...`);
   for (const [index, trade] of trades.entries()) {
     await mutateTrade(trade);
     console.log(`${index + 1} entry of ${trades.length} entries is completed.`);
@@ -100,4 +101,25 @@ const getOrders = (trades) => {
   return orders;
 };
 
-module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrades, getOrders};
+const mutateFeeCoin = async (trade) => {
+  const mutatedTrade = trade;
+  const symbol = `${trade[`feeCoin`]}${trade[`baseCoin`]}`;
+  const startTime = trade[`timestamp`];
+  const historicalSymbolPrice = await getHistoricalSymbolPrice(symbol, startTime);
+  mutatedTrade[`fee`] = historicalSymbolPrice * trade[`fee`];
+  mutatedTrade[`feeCoin`] = trade[`baseCoin`];
+  return mutatedTrade;
+};
+
+const mutateFeeCoins = async (trades) => {
+  console.log(`Getting historical info about ${trades.length} entries...`);
+  const mutatedTrades = [];
+  for (const [index, trade] of trades.entries()) {
+    const mutatedTrade = await mutateFeeCoin(trade);
+    console.log(`${index + 1} entry of ${trades.length} entries is completed.`);
+    mutatedTrades.push(mutatedTrade);
+  }
+  return mutatedTrades;
+};
+
+module.exports = {saveToFile, getJsonFromCsv, getCsvFromJson, mergeCsvFiles, mutateTrades, getOrders, mutateFeeCoins};
