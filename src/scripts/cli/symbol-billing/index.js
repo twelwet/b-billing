@@ -9,10 +9,13 @@ const startScript = () => {
   readLineInterface.question(`SYMBOL [${SYMBOL}]: `, (symbol) => {
     symbol = symbol || SYMBOL;
 
-    readLineInterface.question(`CATEGORY [${CATEGORY}]: `, (category = CATEGORY) => {
+    readLineInterface.question(`CATEGORY [${CATEGORY}]: `, (category) => {
       category = category || CATEGORY;
 
-      console.table(getSymbolBilling(spotTrades, symbol, category));
+      const {buy, sell} = getSymbolBilling(spotTrades, symbol, category);
+      console.table(buy);
+      console.table(sell);
+
       process.exit();
     });
   });
