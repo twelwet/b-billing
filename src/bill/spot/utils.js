@@ -2,17 +2,6 @@
 
 const {reducer, getAssetInfo, sortBySellPeriod, getIsClosed, getSumByField} = require(`../bill-utils`);
 
-const getTotals = (buyTradesList, sellTradesList) => {
-  return {
-    totalSell: sellTradesList.length > 0 ? sellTradesList.map((item) => item[`total`]).reduce(reducer) : 0,
-    totalBuy: buyTradesList.length > 0 ? buyTradesList.map((item) => item[`total`]).reduce(reducer) : 0,
-  };
-};
-
-const getAssetProfit = (totalBuy, totalSell) => {
-  return totalSell === 0 ? 0 : totalSell - totalBuy;
-};
-
 const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
   const allTradesInCategory = allTrades
     .filter((trade) => trade[`category`] === categoryName)
@@ -23,9 +12,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
 
   for (const asset of assets) {
     const assetTrades = trades.filter((item) => item[`symbol`] === asset);
-    const {buyTrades, sellTrades, buyAmount, sellAmount} = getAssetInfo(assetTrades);
-    const {totalBuy, totalSell} = getTotals(buyTrades, sellTrades);
-    const profit = getAssetProfit(totalBuy, totalSell);
+    const {buyAmount, sellAmount, buyTotal, sellTotal} = getAssetInfo(assetTrades);
     const isClosed = getIsClosed(buyAmount, sellAmount);
 
     const periodNames = [...(new Set(allTrades.map((trade) => trade[`period`])))];
@@ -49,7 +36,9 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
       periodProfits[`${period}`] = totalSellInPeriod - price.buy * amountSellInPeriod;
     }
 
-    result.push({asset, buyAmount, sellAmount, totalBuy, totalSell, isClosed, profit, periodProfits, periodNames});
+    const profit = Object.values(periodProfits).reduce(reducer);
+
+    result.push({asset, buyAmount, sellAmount, buyTotal, sellTotal, isClosed, profit, periodProfits, periodNames});
   }
   return result.sort(sortBySellPeriod);
 };

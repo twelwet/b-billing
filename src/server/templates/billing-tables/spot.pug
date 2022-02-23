@@ -30,8 +30,8 @@ block content
         td= pair[`isClosed`] ? `yes` : `no`
         td= pair[`buyAmount`]
         td= pair[`sellAmount`]
-        td= pair[`totalBuy`]
-        td= pair[`totalSell`]
+        td= pair[`buyTotal`]
+        td= pair[`sellTotal`]
         each period in generalInfo.periodNames
           - var periodProfit = pair[`periodNames`].find((periodName) => periodName === period) === period ? pair[`periodProfits`][`${period}`] : 0
           td(style= periodProfit < 0 ? {color: `red`} : {color: `black`})= periodProfit
@@ -48,9 +48,9 @@ block content
       td
         b -
       td
-        b= summaryInfo.totalBuy
+        b= summaryInfo.buyTotal
       td
-        b= summaryInfo.totalSell
+        b= summaryInfo.sellTotal
       each item in summaryInfo.profitByPeriods
         td
           b(style= item < 0 ? {color: `red`} : {color: `black`})= item
