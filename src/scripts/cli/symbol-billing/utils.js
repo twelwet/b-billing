@@ -18,8 +18,8 @@ const getSymbolBilling = (allTrades, symbol, category) => {
   const symbolTrades = getSymbolTradesInCategory(allTrades, symbol, category);
 
   const price = {buy: 0, sell: 0};
-  const amount = {buy: 0, sell: 0};
-  const total = {buy: 0, sell: 0};
+  const amountSummary = {buy: 0, sell: 0};
+  const totalSummary = {buy: 0, sell: 0};
   let profit = 0;
 
   const result = {buy: [], sell: []};
@@ -35,16 +35,16 @@ const getSymbolBilling = (allTrades, symbol, category) => {
     const amountBuy = getSum(periodTradesBuy, `amount`);
     const amountSell = getSum(periodTradesSell, `amount`);
 
-    amount.buy = amount.buy + amountBuy;
-    amount.sell = amount.sell + amountSell;
+    amountSummary.buy = amountSummary.buy + amountBuy;
+    amountSummary.sell = amountSummary.sell + amountSell;
 
     const totalBuy = getSum(periodTradesBuy, `total`);
     const totalSell = getSum(periodTradesSell, `total`);
 
-    total.buy = total.buy + totalBuy;
-    total.sell = total.sell + totalSell;
+    totalSummary.buy = totalSummary.buy + totalBuy;
+    totalSummary.sell = totalSummary.sell + totalSell;
 
-    price.buy = totalBuy / amountBuy || price.buy;
+    price.buy = totalSummary.buy / amountSummary.buy || price.buy;
     price.sell = totalSell / amountSell || price.sell;
 
     const realizedPnl = totalSell - price.buy * amountSell;
@@ -74,18 +74,18 @@ const getSymbolBilling = (allTrades, symbol, category) => {
     period: `SUMMARY`,
     type: Type.BUY,
     symbol,
-    price: total.buy / amount.buy,
-    amount: amount.buy,
-    total: total.buy,
+    price: totalSummary.buy / amountSummary.buy,
+    amount: amountSummary.buy,
+    total: totalSummary.buy,
   });
 
   result[`sell`].push({
     period: `SUMMARY`,
     type: Type.SELL,
     symbol,
-    price: total.sell / amount.sell,
-    amount: amount.sell,
-    total: total.sell,
+    price: totalSummary.sell / amountSummary.sell,
+    amount: amountSummary.sell,
+    total: totalSummary.sell,
     realizedPnl: profit,
   });
 
