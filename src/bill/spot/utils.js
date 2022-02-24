@@ -17,6 +17,9 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
 
     const periodNames = [...(new Set(allTrades.map((trade) => trade[`period`])))];
     const price = {buy: 0, sell: 0};
+    const amountSummary = {buy: 0, sell: 0};
+    const totalSummary = {buy: 0, sell: 0};
+
     const periodProfits = {};
     const periodFee = {};
 
@@ -32,8 +35,13 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
       const amountSellInPeriod = getSumByField(periodTradesSell, `amount`);
       const totalBuyInPeriod = getSumByField(periodTradesBuy, `total`);
       const totalSellInPeriod = getSumByField(periodTradesSell, `total`);
-      // TODO Incorrect evaluating of periodProfits
-      price.buy = totalBuyInPeriod / amountBuyInPeriod || price.buy;
+
+      amountSummary.buy = amountSummary.buy + amountBuyInPeriod;
+      amountSummary.sell = amountSummary.sell + amountSellInPeriod;
+      totalSummary.buy = totalSummary.buy + totalBuyInPeriod;
+      totalSummary.sell = totalSummary.sell + totalSellInPeriod;
+
+      price.buy = totalSummary.buy / amountSummary.buy || price.buy;
       price.sell = totalSellInPeriod / amountSellInPeriod || price.sell;
       periodProfits[`${period}`] = totalSellInPeriod - price.buy * amountSellInPeriod;
       periodFee[`${period}`] = getSumByField(periodTradesSell, `fee`) || 0;
