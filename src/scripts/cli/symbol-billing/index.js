@@ -1,13 +1,13 @@
 'use strict';
 
-const {readLineInterface} = require(`../utils`);
+const {readLineInterface, findSymbol} = require(`../utils`);
 const {spotTrades} = require(`../../../data-entry-point`);
 const {SYMBOL, CATEGORY} = require(`./constants`);
 const {getSymbolBilling} = require(`./utils`);
 
 const startScript = () => {
-  readLineInterface.question(`SYMBOL [${SYMBOL}]: `, (symbol) => {
-    symbol = symbol || SYMBOL;
+  readLineInterface.question(`SYMBOL [${SYMBOL}]: `, async (symbol) => {
+    symbol = await findSymbol(symbol, SYMBOL);
 
     readLineInterface.question(`CATEGORY [${CATEGORY}]: `, (category) => {
       category = category || CATEGORY;
