@@ -35,24 +35,27 @@ block content
       td= summaryInfo[`sellTotal`] - summaryInfo[`buyTotal`]
       td -
     tr
+      - var profitBeforeFee = summaryInfo[`sellTotal`] - buyPrice * summaryInfo[`sellAmount`];
+      - var fee = summaryInfo[`buyFee`] + summaryInfo[`sellFee`];
+      - var profitAfterFee = summaryInfo[`sellTotal`] - summaryInfo[`buyTotal`];
       td PROFIT before FEE
       td -
       td -
       td -
-      td= summaryInfo[`sellTotal`] - buyPrice * summaryInfo[`sellAmount`]
+      td= profitBeforeFee
     tr
       td FEE
       td= summaryInfo[`buyFee`]
       td= summaryInfo[`sellFee`]
       td -
-      td= summaryInfo[`buyFee`] + summaryInfo[`sellFee`]
+      td= fee
     tr
       td PROFIT after FEE
       td -
       td -
       td -
       td
-        b= summaryInfo[`sellTotal`] - summaryInfo[`buyTotal`]
+        b= profitBeforeFee === 0 ? 0 : profitAfterFee
   h3 Orders
   table(border='1')
     tr
