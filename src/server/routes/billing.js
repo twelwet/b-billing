@@ -69,9 +69,9 @@ billingRouter.get(`/futures-coin/:category/:baseCoin`, (req, res) => {
 billingRouter.get(`/spot/orders/:category/:asset`, (req, res) => {
   const category = req.params[`category`];
   const asset = req.params[`asset`];
-  const {orders, generalInfo, summaryInfo} = getAssetData(asset, category);
+  const {orders, generalInfo} = getAssetData(asset, category);
   const title = generalInfo.name;
-  res.render(`./billing-asset/spot`, {title, orders, generalInfo, summaryInfo});
+  res.render(`./billing-asset/spot`, {title, orders, generalInfo});
 });
 
 module.exports = billingRouter;

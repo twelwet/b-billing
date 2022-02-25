@@ -1,102 +1,110 @@
 extends ../layout
 
 block content
-  h3= generalInfo.name
-  table(border='1')
-    tr
-      th
-        b -
-      th
-        b BUY
-      th
-        b SELL
-      th
-        b DELTA
-      th
-        b SUMMARY
-    tr
-      - var buyPrice = summaryInfo[`buyTotal`] / summaryInfo[`buyAmount`] || 0
-      - var sellPrice = summaryInfo[`sellTotal`] / summaryInfo[`sellAmount`] || 0
-      td PRICE
-      td= buyPrice
-      td= sellPrice
-      td= sellPrice - buyPrice
-      td -
-    tr
-      td AMOUNT
-      td= summaryInfo[`buyAmount`]
-      td= summaryInfo[`sellAmount`]
-      td= summaryInfo[`buyAmount`] - summaryInfo[`sellAmount`]
-      td -
-    tr
-      td TOTAL
-      td= summaryInfo[`buyTotal`]
-      td= summaryInfo[`sellTotal`]
-      td= summaryInfo[`sellTotal`] - summaryInfo[`buyTotal`]
-      td -
-    tr
-      - var profitBeforeFee = summaryInfo[`sellTotal`] - buyPrice * summaryInfo[`sellAmount`];
-      - var fee = summaryInfo[`buyFee`] + summaryInfo[`sellFee`];
-      - var profitAfterFee = summaryInfo[`sellTotal`] - summaryInfo[`buyTotal`];
-      td PROFIT before FEE
-      td -
-      td -
-      td -
-      td= profitBeforeFee
-    tr
-      td FEE
-      td= summaryInfo[`buyFee`]
-      td= summaryInfo[`sellFee`]
-      td -
-      td= fee
-    tr
-      td PROFIT after FEE
-      td -
-      td -
-      td -
-      td
-        b= profitBeforeFee === 0 ? 0 : profitAfterFee
-  h3 Orders
-  table(border='1')
-    tr
-      th
-        b period
-      th
-        b category
-      th
-        b tradeType
-      th
-        b orderId
-      th
-        b date
-      th
-        b symbol
-      th
-        b type
-      th
-        b price
-      th
-        b amount
-      th
-        b total
-      th
-        b fee
-      th
-        b feeCoin
-      th
-        b note
-    each order in orders
-      tr
-        td= order[`period`]
-        td= order[`category`]
-        td= order[`tradeType`]
-        td= order[`orderId`]
-        td= order[`date`]
-        td= order[`symbol`]
-        td= order[`type`]
-        td= order[`price`]
-        td= order[`amount`]
-        td= order[`total`]
-        td= order[`fee`]
-        td= order[`feeCoin`]
-        td= order[`note`]
+  h2= generalInfo.name
+  each item in orders
+    - var {tradeType, items, summaryInfo} = item;
+    - var {buyTotal, buyAmount, sellTotal, sellAmount, buyFee, sellFee} = summaryInfo;
+    - var buyPrice = buyTotal / buyAmount || 0;
+    - var sellPrice = sellTotal / sellAmount || 0;
+    - var profitBeforeFee = sellTotal - buyPrice * sellAmount;
+    - var fee = buyFee + sellFee;
+    - var profitAfterFee = sellTotal - buyTotal;
+    div(style={border: `solid`, margin: `10px`, padding: `10px`})
+      h3= `${tradeType.toUpperCase()} Orders Summary`
+      table(border='1')
+        tr
+          th
+            b -
+          th
+            b BUY
+          th
+            b SELL
+          th
+            b DELTA
+          th
+            b SUMMARY
+        tr
+          td PRICE
+          td= buyPrice
+          td= sellPrice
+          td= sellPrice - buyPrice
+          td -
+        tr
+          td AMOUNT
+          td= buyAmount
+          td= sellAmount
+          td= buyAmount - sellAmount
+          td -
+        tr
+          td TOTAL
+          td= buyTotal
+          td= sellTotal
+          td= sellTotal - buyTotal
+          td -
+        tr
+          td PROFIT before FEE
+          td -
+          td -
+          td -
+          td= profitBeforeFee
+        tr
+          td FEE
+          td= buyFee
+          td= sellFee
+          td -
+          td= fee
+        tr
+          td PROFIT after FEE
+          td -
+          td -
+          td -
+          td
+            b= profitBeforeFee === 0 ? 0 : profitAfterFee
+      h3= `${tradeType.toUpperCase()} Orders Items (${items.length})`
+      if items.length
+        table(border='1')
+          tr
+            th
+              b period
+            th
+              b category
+            th
+              b tradeType
+            th
+              b orderId
+            th
+              b date
+            th
+              b symbol
+            th
+              b type
+            th
+              b price
+            th
+              b amount
+            th
+              b total
+            th
+              b fee
+            th
+              b feeCoin
+            th
+              b note
+          each order in items
+            tr
+              td= order[`period`]
+              td= order[`category`]
+              td= order[`tradeType`]
+              td= order[`orderId`]
+              td= order[`date`]
+              td= order[`symbol`]
+              td= order[`type`]
+              td= order[`price`]
+              td= order[`amount`]
+              td= order[`total`]
+              td= order[`fee`]
+              td= order[`feeCoin`]
+              td= order[`note`]
+      else
+        div empty

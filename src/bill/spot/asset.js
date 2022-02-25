@@ -6,20 +6,22 @@ const {getOrders} = require(`../../scripts/utils`);
 
 const getAssetData = (symbol, category) => {
   const trades = spotTrades.filter((trade) => trade[`symbol`] === symbol).filter((trade) => trade[`category`] === category);
-  const {buyAmount, sellAmount, buyTotal, sellTotal, buyFee, sellFee} = getAssetInfo(trades);
+  const closedTrades = trades.filter((trade) => trade[`tradeType`] === `closed`);
+  const openedTrades = trades.filter((trade) => trade[`tradeType`] === `opened`);
+
+  const closedOrders = getOrders(closedTrades);
+  const openedOrders = getOrders(openedTrades);
 
   const generalInfo = {
     name: `${category}/${symbol}`,
   };
 
-  const summaryInfo = {
-    buyAmount, sellAmount, buyTotal, sellTotal, buyFee, sellFee
-  };
-
   return {
-    orders: getOrders(trades),
-    summaryInfo,
     generalInfo,
+    orders: [
+      {tradeType: `closed`, items: closedOrders, summaryInfo: getAssetInfo(closedTrades)},
+      {tradeType: `opened`, items: openedOrders, summaryInfo: getAssetInfo(openedTrades)},
+    ],
   };
 };
 
