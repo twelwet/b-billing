@@ -9,7 +9,7 @@ block content
     - var sellPrice = sellTotal / sellAmount || 0;
     - var profitBeforeFee = sellTotal - buyPrice * sellAmount;
     - var fee = buyFee + sellFee;
-    - var profitAfterFee = sellTotal - buyTotal;
+    - var profitAfterFee = profitBeforeFee - fee;
     div(style={border: `solid`, margin: `10px`, padding: `10px`})
       h3= `${tradeType.toUpperCase()} Orders Summary`
       table(border='1')
