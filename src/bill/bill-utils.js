@@ -42,9 +42,9 @@ const getSumByField = (trades, fieldName) => trades.length > 0
 const getIsClosed = (coinsBuy, coinsSell) => +((coinsBuy - coinsSell).toFixed(5)) <= +(2 * (coinsBuy / 1000).toFixed(5));
 
 const sortBySellPeriod = (a, b) => {
-  const aItem = a[`periodNames`].length > 0 ? +a[`periodNames`][0].slice(-2) : 0;
-  const bItem = b[`periodNames`].length > 0 ? +b[`periodNames`][0].slice(-2) : 0;
-  return aItem - bItem;
+  const aFirstPeriodProfit = (Object.values(a[`periodProfits`]).findIndex((item) => item !== 0));
+  const bFirstPeriodProfit = (Object.values(b[`periodProfits`]).findIndex((item) => item !== 0));
+  return aFirstPeriodProfit - bFirstPeriodProfit;
 };
 
 const sumAssetDataByPeriods = (symbolTradesInCategory, periodNames, field) => {
