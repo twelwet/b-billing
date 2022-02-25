@@ -23,6 +23,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     const periodProfits = {};
     const periodFee = {};
 
+    // TODO divide to multiple functions
     for (const period of periodNames) {
       const periodTrades = assetTrades.filter((trade) => trade[`period`] === period);
       const periodTradesBuy = periodTrades.length > 0
