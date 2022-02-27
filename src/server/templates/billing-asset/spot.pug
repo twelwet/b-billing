@@ -4,12 +4,10 @@ block content
   h2= generalInfo.name
   each item in orders
     - var {tradeType, items, summaryInfo} = item;
-    - var {buyTotal, buyAmount, sellTotal, sellAmount, buyFee, sellFee} = summaryInfo;
+    - var {buyTotal, buyAmount, sellTotal, sellAmount, buyFee, sellFee, profit, fee} = summaryInfo;
     - var buyPrice = buyTotal / buyAmount || 0;
     - var sellPrice = sellTotal / sellAmount || 0;
-    - var profitBeforeFee = sellTotal - buyPrice * sellAmount;
-    - var fee = buyFee + sellFee;
-    - var profitAfterFee = profitBeforeFee - fee;
+    - var profitAfterFee = profit - fee;
     div(style={border: `solid`, margin: `10px`, padding: `10px`})
       h3= `${tradeType.toUpperCase()} Orders Summary`
       table(border='1')
@@ -47,7 +45,7 @@ block content
           td -
           td -
           td -
-          td= profitBeforeFee
+          td= profit
         tr
           td FEE
           td= buyFee
@@ -60,7 +58,7 @@ block content
           td -
           td -
           td
-            b= profitBeforeFee === 0 ? 0 : profitAfterFee
+            b= profit === 0 ? 0 : profitAfterFee
       h3= `${tradeType.toUpperCase()} Orders Items (${items.length})`
       if items.length
         table(border='1')

@@ -29,7 +29,7 @@ const getSymbolInfoInPeriod = (symbolTrades, periodName) => {
 
 const getSymbolBilling = (trades, symbol, periodNames) => {
   const assetTrades = trades.filter((item) => item[`symbol`] === symbol);
-  const {buyAmount, sellAmount, buyTotal, sellTotal} = getAssetInfo(assetTrades);
+  const {buyAmount, sellAmount, buyTotal, sellTotal, buyFee, sellFee} = getAssetInfo(assetTrades);
   const isClosed = getIsClosed(buyAmount, sellAmount);
 
   const price = {buy: 0, sell: 0};
@@ -74,6 +74,8 @@ const getSymbolBilling = (trades, symbol, periodNames) => {
     periodProfits,
     periodFee,
     fee,
+    buyFee,
+    sellFee,
   };
 };
 

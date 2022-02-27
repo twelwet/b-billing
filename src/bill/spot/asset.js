@@ -1,10 +1,11 @@
 'use strict';
 
 const {spotTrades} = require(`../../data-entry-point`);
-const {getAssetInfo} = require(`../bill-utils`);
+const {getSymbolBilling} = require(`./utils`);
 const {getOrders} = require(`../../scripts/utils`);
 
 const getAssetData = (symbol, category) => {
+  const periodNames = [...(new Set(spotTrades.map((trade) => trade[`period`])))];
   const trades = spotTrades.filter((trade) => trade[`symbol`] === symbol).filter((trade) => trade[`category`] === category);
   const closedTrades = trades.filter((trade) => trade[`tradeType`] === `closed`);
   const openedTrades = trades.filter((trade) => trade[`tradeType`] === `opened`);
@@ -19,8 +20,8 @@ const getAssetData = (symbol, category) => {
   return {
     generalInfo,
     orders: [
-      {tradeType: `closed`, items: closedOrders, summaryInfo: getAssetInfo(closedTrades)},
-      {tradeType: `opened`, items: openedOrders, summaryInfo: getAssetInfo(openedTrades)},
+      {tradeType: `closed`, items: closedOrders, summaryInfo: getSymbolBilling(closedTrades, symbol, periodNames)},
+      {tradeType: `opened`, items: openedOrders, summaryInfo: getSymbolBilling(openedTrades, symbol, periodNames)},
     ],
   };
 };
