@@ -8,6 +8,7 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     .filter((trade) => trade[`baseCoin`] === baseCoin);
   const trades = allTradesInCategory.filter((trade) => trade[`tradeType`] === tradeType);
   const assets = [...new Set(trades.map((item) => item[`symbol`]))];
+  const periodNames = [...(new Set(allTrades.map((trade) => trade[`period`])))];
   const result = [];
 
   for (const asset of assets) {
@@ -15,7 +16,6 @@ const getBilling = (allTrades, categoryName, tradeType, baseCoin) => {
     const {buyAmount, sellAmount, buyTotal, sellTotal} = getAssetInfo(assetTrades);
     const isClosed = getIsClosed(buyAmount, sellAmount);
 
-    const periodNames = [...(new Set(allTrades.map((trade) => trade[`period`])))];
     const price = {buy: 0, sell: 0};
     const amountSummary = {buy: 0, sell: 0};
     const totalSummary = {buy: 0, sell: 0};
