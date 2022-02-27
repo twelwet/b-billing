@@ -1,7 +1,7 @@
 'use strict';
 
 const {CATEGORY_NULL} = require(`./constants`);
-const {getSumByField} = require(`../../../bill/bill-utils`);
+const {getSymbolInfoInPeriod} = require(`../../../bill/spot/utils`);
 const {Type} = require(`../../../bill/constants`);
 
 const getSymbolTradesInCategory = (allTrades, symbol, category) => category === CATEGORY_NULL
@@ -22,48 +22,43 @@ const getSymbolBilling = (allTrades, symbol, category) => {
 
   const result = {buy: [], sell: []};
   for (const period of periods) {
-    const periodTrades = symbolTrades.filter((trade) => trade[`period`] === period);
-    const periodTradesBuy = periodTrades
-      .filter((trade) => trade[`type`] === Type.BUY)
-      .filter((trade) => trade[`tradeType`] === `closed`);
-    const periodTradesSell = periodTrades
-      .filter((trade) => trade[`type`] === Type.SELL)
-      .filter((trade) => trade[`tradeType`] === `closed`);
+    const {
+      amountBuyInPeriod,
+      amountSellInPeriod,
+      totalBuyInPeriod,
+      totalSellInPeriod,
+      // sellFeeInPeriod,
+      // buyFeeInPeriod,
+    } = getSymbolInfoInPeriod(symbolTrades, period);
 
-    const amountBuy = getSumByField(periodTradesBuy, `amount`);
-    const amountSell = getSumByField(periodTradesSell, `amount`);
+    amountSummary.buy = amountSummary.buy + amountBuyInPeriod;
+    amountSummary.sell = amountSummary.sell + amountSellInPeriod;
 
-    amountSummary.buy = amountSummary.buy + amountBuy;
-    amountSummary.sell = amountSummary.sell + amountSell;
-
-    const totalBuy = getSumByField(periodTradesBuy, `total`);
-    const totalSell = getSumByField(periodTradesSell, `total`);
-
-    totalSummary.buy = totalSummary.buy + totalBuy;
-    totalSummary.sell = totalSummary.sell + totalSell;
+    totalSummary.buy = totalSummary.buy + totalBuyInPeriod;
+    totalSummary.sell = totalSummary.sell + totalSellInPeriod;
 
     price.buy = totalSummary.buy / amountSummary.buy || price.buy;
-    price.sell = totalSell / amountSell || price.sell;
+    price.sell = totalSellInPeriod / amountSellInPeriod || price.sell;
 
-    const realizedPnl = totalSell - price.buy * amountSell;
+    const realizedPnl = totalSellInPeriod - price.buy * amountSellInPeriod;
     profit = profit + realizedPnl;
 
     result[`buy`].push({
       period,
       type: Type.BUY,
       symbol,
-      price: totalBuy / amountBuy || 0,
-      amount: amountBuy,
-      total: totalBuy,
+      price: totalBuyInPeriod / amountBuyInPeriod || 0,
+      amount: amountBuyInPeriod,
+      total: totalBuyInPeriod,
     });
 
     result[`sell`].push({
       period,
       type: Type.SELL,
       symbol,
-      price: totalSell / amountSell || 0,
-      amount: amountSell,
-      total: totalSell,
+      price: totalSellInPeriod / amountSellInPeriod || 0,
+      amount: amountSellInPeriod,
+      total: totalSellInPeriod,
       realizedPnl,
     });
 

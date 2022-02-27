@@ -77,4 +77,4 @@ const getSymbolBilling = (trades, symbol, periodNames) => {
   };
 };
 
-module.exports = {getTargetTrades, getSymbolBilling};
+module.exports = {getTargetTrades, getSymbolBilling, getSymbolInfoInPeriod};
