@@ -1,6 +1,6 @@
 'use strict';
 
-const {getBilling} = require(`./utils`);
+const getBilling = require(`./get-billing`);
 const {reducer, sumAssetsDataByPeriods} = require(`../bill-utils`);
 const {TradeType} = require(`../constants`);
 const {spotTrades} = require(`../../data-entry-point`);
