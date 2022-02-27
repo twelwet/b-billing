@@ -1,7 +1,7 @@
 'use strict';
 
 const {CATEGORY_NULL} = require(`./constants`);
-const {reducer} = require(`../../../bill/bill-utils`);
+const {getSumByField} = require(`../../../bill/bill-utils`);
 const {Type} = require(`../../../bill/constants`);
 
 const getSymbolTradesInCategory = (allTrades, symbol, category) => category === CATEGORY_NULL
@@ -10,8 +10,6 @@ const getSymbolTradesInCategory = (allTrades, symbol, category) => category === 
   : allTrades
     .filter((trade) => trade[`symbol`].includes(symbol))
     .filter((trade) => trade[`category`] === category);
-
-const getSum = (trades, field) => trades.length > 0 ? trades.map((trade) => trade[field]).reduce(reducer) : 0;
 
 const getSymbolBilling = (allTrades, symbol, category) => {
   const periods = [...new Set(allTrades.map((trade) => trade[`period`]))];
@@ -32,14 +30,14 @@ const getSymbolBilling = (allTrades, symbol, category) => {
       .filter((trade) => trade[`type`] === Type.SELL)
       .filter((trade) => trade[`tradeType`] === `closed`);
 
-    const amountBuy = getSum(periodTradesBuy, `amount`);
-    const amountSell = getSum(periodTradesSell, `amount`);
+    const amountBuy = getSumByField(periodTradesBuy, `amount`);
+    const amountSell = getSumByField(periodTradesSell, `amount`);
 
     amountSummary.buy = amountSummary.buy + amountBuy;
     amountSummary.sell = amountSummary.sell + amountSell;
 
-    const totalBuy = getSum(periodTradesBuy, `total`);
-    const totalSell = getSum(periodTradesSell, `total`);
+    const totalBuy = getSumByField(periodTradesBuy, `total`);
+    const totalSell = getSumByField(periodTradesSell, `total`);
 
     totalSummary.buy = totalSummary.buy + totalBuy;
     totalSummary.sell = totalSummary.sell + totalSell;
